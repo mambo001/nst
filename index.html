@@ -5,49 +5,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ey</title>
-</head>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
 <body>
-    <!--     -->
-    <style>
-        /* Always set the map height explicitly to define the size of the div
-         * element that contains the map. */
-        #map {
-          height: 100vh;
-        }
-        /* Optional: Makes the sample page fill the window. */
-        html, body {
-          height: 100%;
-          margin: 0;
-          padding: 0;
-        }
-      </style>
-    </head>
-    <body>
-      <div id="map">
+    <div id="map"></div> 
+
+    <div class="sidebar">
+      <div class="card sidebar-item">
+        <div class="card-content">
+          <span class="card-title">Destination</span>
+          <p>Enter your starting point and destination</p>
+
+          <div class="input-field">
+            <input placeholder="Catarman" id="inputStartingPoint" type="text" class="validate">
+            <label class="active" for="inputStartingPoint">Starting Point</label>
+          </div>
+
+          <div class="input-field">
+            <input placeholder="Mars" id="inputDestination" type="text" class="validate">
+            <label class="active" for="inputDestination">Destination</label>
+          </div>
           
-      
-        <div style="width: 100px; height: 100px; background: red; z-index: 1111111111111111111;">
-            <input type="search" id="searchPlace" placeholder="Catarman">
         </div>
-    </div> 
+        <div class="card-action">
+          <button class="btn waves-effect waves-light" type="submit" name="action">Search
+            <i class="material-icons right">search</i>
+          </button>
+        </div>
+      </div>
+    </div>
       <script>
         var map,
             search,
-            searchPlace = document.querySelector('#searchPlace');
+            infoWindow,
+            defaultBounds,
+            inputStartingPoint = document.querySelector('#inputStartingPoint'),
+            inputDestination = document.querySelector('#inputDestination');
         function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 12.4966987, lng: 124.6407558},
-            zoom: 18,
+            center: {lat: 12.379054, lng: 124.820326},
+            zoom: 11,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
+            disableDefaultUI: true
           });
 
-          search = new google.maps.places.SearchBox((searchPlace));
-        }
+          // defaultBounds = ;
+          inputStartingPoint = new google.maps.places.SearchBox(inputStartingPoint, {
+            types: ['geocode'],
+            // types: {regions: 'administrative_area_level_3'},
+            // bounds: defaultBounds,
+            componentRestrictions: {country: 'ph'}
+          });
+
+          inputDestination = new google.maps.places.SearchBox((inputDestination));
+
+
+
+          map.addListener('bounds_changed', function() {
+            inputStartingPoint.setBounds(map.getBounds());
+          });
+
+          inputStartingPoint.addListener('place_changed', function() {
+
+            var place = inputStartingPoint.getPlace();
+
+            if (place.length == 0) {
+                return;
+            }
+
+            if (!place.geometry) {
+                console.log("No details available for input: '" + place.name + "'");
+                return;
+            }
+
+            // ...
+
+          });
+
+          infoWindow = new google.maps.InfoWindow;
+
+          // Try HTML5 geolocation.
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              };
+
+              infoWindow.setPosition(pos);
+              infoWindow.setContent('Location found.');
+              infoWindow.open(map);
+              map.setCenter(pos);
+              inputStartingPoint.setBounds(pos);
+              
+            }, function() {
+              handleLocationError(true, infoWindow, map.getCenter());
+              
+            });
+          } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+          }
+
+
+
+         }
+
+
         
         
       </script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPBDWelc9YGjZpJJQBL5-Qc0D7OHwN7II&callback=initMap"
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPBDWelc9YGjZpJJQBL5-Qc0D7OHwN7II&libraries=places&callback=initMap"
       async defer></script>
+        <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
 </body>
 </html>

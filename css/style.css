@@ -1,0 +1,28 @@
+/* Always set the map height explicitly to define the size of the div
+* element that contains the map. */
+#map {
+    height: 100vh;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar{
+    color: #596157;
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    z-index: 2;
+    top: 16px;
+    width: 360px;
+    overflow: hidden;
+    background-color: hsla(0, 0%, 0%, 0.13);
+    box-shadow: 0px 8px 8px hsla(0, 0%, 0%, 0.2);
+}
+
+.sidebar-item{
+    margin: 0;
+}
