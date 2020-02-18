@@ -66,18 +66,25 @@
           // get location after clicking search
           // get latlng of location
           // add marker to each location
-          // get destination? destination? streep view? directions?
+          // get destination? destination? street view? directions?
           // get destination's ETA
           // get destinations accomodations? suggestions?
           buttonSearch.addEventListener('click', (e) => {
             let places = [],
               startingPoint = inputStartingPoint.getPlaces(),
               destinationPoint = inputDestination.getPlaces();
-
+            console.table(new google.maps.LatLng(startingPoint[0].geometry.location));
             places.push(startingPoint[0]);
             places.push(destinationPoint[0]);
 
+            let marker;
             console.log(places);
+            places.forEach((place) => {
+              marker = new google.maps.Marker({
+                position: place.geometry.location,
+                map: map
+              });
+            });
           });
 
 
@@ -131,6 +138,10 @@
 
 
          }
+
+        function l2gLatLng(latlng) {
+          return new google.maps.LatLng(latlng.lat, latlng.lng);
+        }
 
 
         
