@@ -31,7 +31,7 @@
           
         </div>
         <div class="card-action">
-          <button class="btn waves-effect waves-light" type="submit" name="action">Search
+          <button class="btn waves-effect waves-light" id="buttonSearch">Search
             <i class="material-icons right">search</i>
           </button>
         </div>
@@ -43,7 +43,8 @@
             infoWindow,
             defaultBounds,
             inputStartingPoint = document.querySelector('#inputStartingPoint'),
-            inputDestination = document.querySelector('#inputDestination');
+            inputDestination = document.querySelector('#inputDestination'),
+            buttonSearch = document.querySelector('#buttonSearch');
         function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 12.379054, lng: 124.820326},
@@ -61,6 +62,23 @@
           });
 
           inputDestination = new google.maps.places.SearchBox((inputDestination));
+
+          // get location after clicking search
+          // get latlng of location
+          // add marker to each location
+          // get destination? destination? streep view? directions?
+          // get destination's ETA
+          // get destinations accomodations? suggestions?
+          buttonSearch.addEventListener('click', (e) => {
+            let places = [],
+              startingPoint = inputStartingPoint.getPlaces(),
+              destinationPoint = inputDestination.getPlaces();
+
+            places.push(startingPoint[0]);
+            places.push(destinationPoint[0]);
+
+            console.log(places);
+          });
 
 
 
