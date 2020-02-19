@@ -1,6 +1,6 @@
 /* Always set the map height explicitly to define the size of the div
 * element that contains the map. */
-#map {
+#map-canvas {
     height: 100vh;
 }
 /* Optional: Makes the sample page fill the window. */
@@ -26,3 +26,13 @@ html, body {
 .sidebar-item{
     margin: 0;
 }
+
+header, main, footer {
+    padding-left: 300px;
+  }
+
+  @media only screen and (max-width : 992px) {
+    header, main, footer {
+      padding-left: 0;
+    }
+  }
