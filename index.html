@@ -5,154 +5,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ey</title>
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/d004434a5ff76e7b97c8b07c01f34ca69e635d97/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
-  </head>
+</head>
 <body>
-    <div id="map"></div> 
-
-    <div class="sidebar">
-      <div class="card sidebar-item">
-        <div class="card-content">
-          <span class="card-title">Destination</span>
-          <p>Enter your starting point and destination</p>
-
-          <div class="input-field">
-            <input placeholder="Catarman" id="inputStartingPoint" type="text" class="validate">
-            <label class="active" for="inputStartingPoint">Starting Point</label>
-          </div>
-
-          <div class="input-field">
-            <input placeholder="Mars" id="inputDestination" type="text" class="validate">
-            <label class="active" for="inputDestination">Destination</label>
-          </div>
-          
+    
+    <header>
+      <!-- Dropdown Structure -->
+      <ul id="dropdown1" class="dropdown-content">
+        <li><a href="#!">one</a></li>
+        <li><a href="#!">two</a></li>
+        <li class="divider"></li>
+        <li><a href="#!">three</a></li>
+      </ul>
+      <nav class="blue lighten-2 ">
+        <div class="nav-wrapper">
+          <a href="#!" class="brand-logo">NST</a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="sass.html">Home</a></li>
+            <li><a href="badges.html">About</a></li>
+            <!-- Dropdown Trigger -->
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Settings<i class="material-icons right">arrow_drop_down</i></a></li>
+          </ul>
         </div>
-        <div class="card-action">
-          <button class="btn waves-effect waves-light" id="buttonSearch">Search
-            <i class="material-icons right">search</i>
-          </button>
+      </nav>
+
+      <ul id="slide-out" class="sidenav">
+        <!-- <li>
+          <div class="row">
+            <h4>Start travellin'</h4>
+            <div class="input-field col s12">
+              <input id="startingPoint" type="text" placeholder="Catarman">
+              <label class="active" for="startingPoint"></label>
+              <input type="text" id="address1" placeholder="Nearest address">
+              <label for="address1"></label>
+            </div>
+            <div class="input-field col s12">
+              <input id="destinationPoint" type="text" placeholder="Mars">
+              <label class="active" for="desinationPoint"></label>
+              
+              <input id="address2" type="text" placeholder="Nearest address">
+              <label class="active" for="address2"></label>
+              
+              <input type="hidden" name="latitude2" class="latitude form-control" value="" />
+              <input type="hidden" name="longitude2" class="longitude form-control" value="" />
+              <input type="hidden" name="marker_status" class="form-control" id="info"/>
+            </div>
+
+            <h4>Information</h4>
+            <div class="input-field col s12">
+              <p id="total"></p>
+            </div>
+            
+          </div>
+        </li> -->
+
+      </ul>
+      <!-- <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
+    </header>
+
+    <main>
+      
+      <div id="map-canvas"></div>
+
+      <div class="sidebar">
+        <div class="card sidebar-item">
+          <div class="card-content">
+            <span class="card-title">Destination</span>
+            <p>Enter your starting point and destination</p>
+  
+            <div class="input-field">
+              <input placeholder="Catarman" id="inputStartingPoint" type="text" class="" autocomplete="new-password">
+              <label class="active" for="inputStartingPoint">Starting Point</label>
+
+              <input type="text" id="address1" placeholder="Nearest address" readonly>
+              <label for="address1"></label>
+            </div>
+  
+            <div class="input-field">
+              <input placeholder="Mars" id="inputDestination" type="text" class="" autocomplete="new-password">
+              <label class="active" for="inputDestination">Destination</label>
+
+              <input id="address2" type="text" placeholder="Nearest address" readonly>
+              <label class="active" for="address2"></label>
+            </div>  
+
+
+            
+            <input type="hidden" name="latitude2" class="latitude form-control" value="" />
+            <input type="hidden" name="longitude2" class="longitude form-control" value="" />
+            <input type="hidden" name="marker_status" class="form-control" id="info"/>
+            
+          </div>
+          <div class="card-action">
+            <button class="btn waves-effect waves-light blue lighten-2" id="buttonSearch">Search
+              <i class="material-icons left">search</i>
+            </button>
+          </div>
         </div>
-      </div>
-    </div>
-      <script>
-        var map,
-            search,
-            infoWindow,
-            defaultBounds,
-            inputStartingPoint = document.querySelector('#inputStartingPoint'),
-            inputDestination = document.querySelector('#inputDestination'),
-            buttonSearch = document.querySelector('#buttonSearch');
-        function initMap() {
-          map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 12.379054, lng: 124.820326},
-            zoom: 11,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            disableDefaultUI: true
-          });
-
-          // defaultBounds = ;
-          inputStartingPoint = new google.maps.places.SearchBox(inputStartingPoint, {
-            types: ['geocode'],
-            // types: {regions: 'administrative_area_level_3'},
-            // bounds: defaultBounds,
-            componentRestrictions: {country: 'ph'}
-          });
-
-          inputDestination = new google.maps.places.SearchBox((inputDestination));
-
-          // get location after clicking search
-          // get latlng of location
-          // add marker to each location
-          // get destination? destination? street view? directions?
-          // get destination's ETA
-          // get destinations accomodations? suggestions?
-          buttonSearch.addEventListener('click', (e) => {
-            let places = [],
-              startingPoint = inputStartingPoint.getPlaces(),
-              destinationPoint = inputDestination.getPlaces();
-            console.table(new google.maps.LatLng(startingPoint[0].geometry.location));
-            places.push(startingPoint[0]);
-            places.push(destinationPoint[0]);
-
-            let marker;
-            console.log(places);
-            places.forEach((place) => {
-              marker = new google.maps.Marker({
-                position: place.geometry.location,
-                map: map
-              });
-            });
-          });
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Info</span>
+              <div class="row" id="informationCard">
+                
+            </div>
+          </div>
+        </div>    
+    </main>
 
 
-
-          map.addListener('bounds_changed', function() {
-            inputStartingPoint.setBounds(map.getBounds());
-          });
-
-          inputStartingPoint.addListener('place_changed', function() {
-
-            var place = inputStartingPoint.getPlace();
-
-            if (place.length == 0) {
-                return;
-            }
-
-            if (!place.geometry) {
-                console.log("No details available for input: '" + place.name + "'");
-                return;
-            }
-
-            // ...
-
-          });
-
-          infoWindow = new google.maps.InfoWindow;
-
-          // Try HTML5 geolocation.
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-              var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-              };
-
-              infoWindow.setPosition(pos);
-              infoWindow.setContent('Location found.');
-              infoWindow.open(map);
-              map.setCenter(pos);
-              inputStartingPoint.setBounds(pos);
-              
-            }, function() {
-              handleLocationError(true, infoWindow, map.getCenter());
-              
-            });
-          } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, infoWindow, map.getCenter());
-          }
-
-
-
-         }
-
-        function l2gLatLng(latlng) {
-          return new google.maps.LatLng(latlng.lat, latlng.lng);
-        }
-
-
-        
-        
-      </script>
-      <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPBDWelc9YGjZpJJQBL5-Qc0D7OHwN7II&libraries=places&callback=initMap"
-      async defer></script>
-        <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyCPBDWelc9YGjZpJJQBL5-Qc0D7OHwN7II"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/d004434a5ff76e7b97c8b07c01f34ca69e635d97/src/js/bootstrap-datetimepicker.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 </html>
