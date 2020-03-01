@@ -248,6 +248,8 @@ google.maps.event.addListener(searchBox2, 'places_changed', function() {
         console.log("searchbox 2 make route");
         setTimeout(function() {
             calcRoute();
+            distanceMatrix();
+            
         }, 500);
     }
     else{
@@ -265,83 +267,59 @@ google.maps.event.addListener(searchBox2, 'places_changed', function() {
 
 }
 //initial function close here
-
-
-// /////////////////////////////////////////////////////////////////
-
-var service = new google.maps.DistanceMatrixService;
-console.log("geocode: " + geocodeObject);
-// let inputLatLng = [
-//   {
-//     lat: document.querySelector('.latitude').value,
-//     lng: document.querySelector('.latitude').value,
-//     origin: document.querySelector('#inputStartingPoint')
-//   },
-//   {
-//     lat: ,
-//     lng: ,
-//     lng: document.querySelector('#inputDestination'),
-//     origin: document.querySelector('#inputStartingPoint')
-//   }
-// ];
-
-// var origin1 = {lat: inputLatLng[0].lat, lng: inputLatLng[0].lng};
-// var origin2 = 'Greenwich, England';
-// var destinationA = 'Stockholm, Sweden';
-// var destinationB = {lat: 50.087, lng: 14.421};
-
-// service.getDistanceMatrix({
-//   origins: [origin1, origin2],
-//   destinations: [destinationA, destinationB],
-//   travelMode: 'DRIVING',
-//   unitSystem: google.maps.UnitSystem.METRIC,
-//   avoidHighways: false,
-//   avoidTolls: false
-// }, function(response, status) {
-//   if (status !== 'OK') {
-//     alert('Error was: ' + status);
-//   } else {
-//     var originList = response.originAddresses;
-//     var destinationList = response.destinationAddresses;
-//     var outputDiv = document.getElementById('output');
-//     outputDiv.innerHTML = '';
-//     deleteMarkers(markersArray);
-
-//     var showGeocodedAddressOnMap = function(asDestination) {
-//       var icon = asDestination ? destinationIcon : originIcon;
-//       return function(results, status) {
-//         if (status === 'OK') {
-//           map.fitBounds(bounds.extend(results[0].geometry.location));
-//           markersArray.push(new google.maps.Marker({
-//             map: map,
-//             position: results[0].geometry.location,
-//             icon: icon
-//           }));
-//         } else {
-//           alert('Geocode was not successful due to: ' + status);
-//         }
-//       };
-//     };
-
-//     for (var i = 0; i < originList.length; i++) {
-//       var results = response.rows[i].elements;
-//       geocoder.geocode({'address': originList[i]},
-//           showGeocodedAddressOnMap(false));
-//       for (var j = 0; j < results.length; j++) {
-//         geocoder.geocode({'address': destinationList[j]},
-//             showGeocodedAddressOnMap(true));
-//         outputDiv.innerHTML += originList[i] + ' to ' + destinationList[j] +
-//             ': ' + results[j].distance.text + ' in ' +
-//             results[j].duration.text + '<br>';
-//       }
-//     }
-//   }
-// });
-
-/////////////////////////////////////////////////////////////////////
-
-
 // calculate route function
+
+function distanceMatrix(){
+  var start = $('#address1').val();
+  var end = $('#address2').val();
+
+  var origin1 = new google.maps.LatLng(latLngArray[0]);
+  var origin2 = start;
+  var destinationA = end;
+  var destinationB = new google.maps.LatLng(latLngArray[1]);
+
+  var service = new google.maps.DistanceMatrixService();
+  service.getDistanceMatrix(
+    {
+      origins: [origin1, origin2],
+      destinations: [destinationA, destinationB],
+      travelMode: 'DRIVING',
+      // transitOptions: TransitOptions,
+      // drivingOptions: DrivingOptions,
+      // unitSystem: UnitSystem,
+      // avoidHighways: Boolean,
+      // avoidTolls: Boolean,
+    }, function callback(response, status) {
+      // See Parsing the Results for
+      // the basics of a callback function.
+      console.log('distance matrix: ' + status);
+      console.log(response);
+      console.log("array: " + JSON.stringify(response.rows[1].elements));
+      let destinationObject = response.rows[1].elements[0],
+          destinationDistance = destinationObject.distance,
+          destinationDuration = destinationObject.duration;
+
+
+      console.log("dd: " + JSON.stringify(destinationDistance) + JSON.stringify(destinationDuration));
+      // needs validation
+      destinationInfo.push({
+        label: "duration",
+        value: destinationDuration.text
+      });
+
+      destinationInfo.push({
+        label: "distance",
+        value: destinationDistance.text
+      });
+      // add info sidebar
+      getInfo(destinationInfo);
+
+      console.table("info: " + JSON.stringify(destinationObject));
+    });
+
+
+}
+
 
 function calcRoute() {
   var start = $('#address1').val();
@@ -363,12 +341,9 @@ function calcRoute() {
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
-      console.log("Done");
+      console.log(response);
       var route = response.routes[0];
-      computeTotalDistance(response);
-
-      // add info sidebar
-      getInfo(destinationInfo);
+      // computeTotalDistance(response);
 
       let geo = geocodeObject.map((g) => {
         return g[0].geometry.location;
@@ -390,6 +365,7 @@ function computeTotalDistance(result) {
   }
   total = total / 1000.0;
   // document.getElementById('total').innerHTML = total + ' km';
+  // pushing new destination info
   destinationInfo.push({
     label: "distance",
     value: total + " km"
@@ -407,10 +383,15 @@ function getInfo(infoArray) {
         createUUID = generateUUID(),
         div = document.createElement('div');
 
+    // reset infocard
+    // infoCard.innerHTML = '';
+
     div.innerHTML = `
     <input readonly value="${info.value}" id="${createUUID}" type="text">
     <label for="${createUUID}" class="active">${info.label}</label>`;
     div.classList.add('input-field');
+
+    
 
     infoCard.appendChild(div);
   });
