@@ -25,8 +25,8 @@
         <div class="nav-wrapper">
           <a href="#!" class="brand-logo">NST</a>
           <ul class="right hide-on-med-and-down">
-            <li><a href="sass.html">Home</a></li>
-            <li><a href="badges.html">About</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#" class="active">Get Directions</a></li>
             <!-- Dropdown Trigger -->
             <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Settings<i class="material-icons right">arrow_drop_down</i></a></li>
           </ul>
@@ -75,29 +75,29 @@
         <div class="card sidebar-item">
           <div class="card-content">
             <span class="card-title">Destination</span>
-            <p>Enter your starting point and destination</p>
+            <p>Start your journey by giving your starting spoint and destination</p>
   
             <div class="input-field">
               <input placeholder="Catarman" id="inputStartingPoint" type="text" class="" autocomplete="new-password">
               <label class="active" for="inputStartingPoint">Starting Point</label>
 
-              <input type="text" id="address1" placeholder="Nearest address" readonly>
-              <label for="address1"></label>
+              <input class="hide" type="text" id="address1" placeholder="Nearest address" readonly>
+              <label class="hide" for="address1"></label>
             </div>
   
             <div class="input-field">
               <input placeholder="Mars" id="inputDestination" type="text" class="" autocomplete="new-password">
               <label class="active" for="inputDestination">Destination</label>
 
-              <input id="address2" type="text" placeholder="Nearest address" readonly>
-              <label class="active" for="address2"></label>
+              <input id="address2" class="hide" type="text" placeholder="Nearest address" readonly>
+              <label class="active hide" for="address2"></label>
             </div>  
 
 
             
-            <input type="" name="latitude2" class="latitude form-control" value="" />
-            <input type="" name="longitude2" class="longitude form-control" value="" />
-            <input type="" name="marker_status" class="form-control" id="info"/>
+            <input type="" name="latitude2" class="hide latitude form-control" value="" />
+            <input type="" name="longitude2" class="hide longitude form-control" value="" />
+            <input type="" name="marker_status" class="hide form-control" id="info"/>
             
           </div>
           <div class="card-action">

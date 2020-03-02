@@ -140,7 +140,7 @@ function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
     var catarman = new google.maps.LatLng(12.379054, 124.820326);
     var mapOptions = {
-      zoom: 6,
+      zoom: 11,
       center: catarman
     }
 
@@ -162,7 +162,7 @@ directionsDisplay.setMap(map);
  // search function start here
   google.maps.event.addListener(searchBox1, 'places_changed', function() {
     var places = searchBox1.getPlaces();
-    console.log("searchbox 1: " + JSON.stringify(places));
+    // console.log("searchbox 1: " + JSON.stringify(places));
     geocodeObject.push(places);
 
     if (places.length == 0) {
@@ -210,8 +210,9 @@ directionsDisplay.setMap(map);
 
 google.maps.event.addListener(searchBox2, 'places_changed', function() {
   
-  var places1 = searchBox2.getPlaces();
-  console.log("searchbox 2: " + JSON.stringify(places1));
+  let places1 = searchBox2.getPlaces(),
+      destination = places1[0].geometry.location;
+  // console.log("searchbox 2: " + JSON.stringify());
   geocodeObject.push(places1);
 
   if (places1.length == 0) {
@@ -249,6 +250,8 @@ google.maps.event.addListener(searchBox2, 'places_changed', function() {
         setTimeout(function() {
             calcRoute();
             distanceMatrix();
+            console.log("destination pos: " + JSON.stringify(destination));
+            getNearbyPlaces(destination);
             
         }, 500);
     }
@@ -269,6 +272,7 @@ google.maps.event.addListener(searchBox2, 'places_changed', function() {
 //initial function close here
 // calculate route function
 
+// get distance and duration
 function distanceMatrix(){
   var start = $('#address1').val();
   var end = $('#address2').val();
@@ -300,7 +304,7 @@ function distanceMatrix(){
           destinationDuration = destinationObject.duration;
 
 
-      console.log("dd: " + JSON.stringify(destinationDistance) + JSON.stringify(destinationDuration));
+      // console.log("dd: " + JSON.stringify(destinationDistance) + JSON.stringify(destinationDuration));
       // needs validation
       destinationInfo.push({
         label: "duration",
@@ -318,6 +322,21 @@ function distanceMatrix(){
     });
 
 
+}
+
+function getNearbyPlaces(pos) {
+  let service = new google.maps.places.PlacesService(map);
+  console.log(pos);
+  // pos = { lat: latLngArray[1][0], lng: latLngArray[1][1] };
+  service.nearbySearch({
+    location: pos,
+    // radius: '15000',
+    // type: ['tourist_attraction'],
+    keyword: 'resort',
+    rankBy: google.maps.places.RankBy.DISTANCE
+  }, function(results){
+    console.log("nearBySearch: " + JSON.stringify(results));
+  });
 }
 
 
@@ -341,7 +360,8 @@ function calcRoute() {
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
-      console.log(response);
+      // console.log(response.geocoded_waypoints[1].place_id);
+      // response.geocoded_waypoints[1].place_id
       var route = response.routes[0];
       // computeTotalDistance(response);
 
@@ -387,8 +407,8 @@ function getInfo(infoArray) {
     // infoCard.innerHTML = '';
 
     div.innerHTML = `
-    <input readonly value="${info.value}" id="${createUUID}" type="text">
-    <label for="${createUUID}" class="active">${info.label}</label>`;
+    <input readonly value="${info.value}" id="${createUUID}" type="text" >
+    <label for="${createUUID}" class="active" style="text-transform: capitalize;">${info.label}</label>`;
     div.classList.add('input-field');
 
     
