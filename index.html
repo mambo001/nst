@@ -4,116 +4,232 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ey</title>
-    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> -->
+    <title>NST</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/d004434a5ff76e7b97c8b07c01f34ca69e635d97/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     
     <header>
-      <!-- Dropdown Structure -->
-      <ul id="dropdown1" class="dropdown-content">
-        <li><a href="#!">one</a></li>
-        <li><a href="#!">two</a></li>
-        <li class="divider"></li>
-        <li><a href="#!">three</a></li>
-      </ul>
-      <nav class="blue lighten-2 ">
-        <div class="nav-wrapper">
-          <a href="#!" class="brand-logo">NST</a>
-          <ul class="right hide-on-med-and-down">
-            <li><a href="#">Home</a></li>
-            <li><a href="#" class="active">Get Directions</a></li>
-            <!-- Dropdown Trigger -->
-            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Settings<i class="material-icons right">arrow_drop_down</i></a></li>
-          </ul>
-        </div>
-      </nav>
-
-      <ul id="slide-out" class="sidenav">
-        <!-- <li>
-          <div class="row">
-            <h4>Start travellin'</h4>
-            <div class="input-field col s12">
-              <input id="startingPoint" type="text" placeholder="Catarman">
-              <label class="active" for="startingPoint"></label>
-              <input type="text" id="address1" placeholder="Nearest address">
-              <label for="address1"></label>
+      <div class="navbar-fixed">
+        <nav class="cyan darken-2">
+          <div class="container">
+            <div class="nav-wrapper">
+              <a href="#!" class="brand-logo">NST</a>
+              <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+               <ul class="right hide-on-med-and-down">
+                <li class="active">
+                  <a href="#home">Home</a>
+                </li>
+                <li>
+                  <a href="#search">Get Directions</a>
+                </li>
+                <li>
+                  <a href="#popular">About</a>
+                </li>
+              </ul>
             </div>
-            <div class="input-field col s12">
-              <input id="destinationPoint" type="text" placeholder="Mars">
-              <label class="active" for="desinationPoint"></label>
-              
-              <input id="address2" type="text" placeholder="Nearest address">
-              <label class="active" for="address2"></label>
-              
-              <input type="hidden" name="latitude2" class="latitude form-control" value="" />
-              <input type="hidden" name="longitude2" class="longitude form-control" value="" />
-              <input type="hidden" name="marker_status" class="form-control" id="info"/>
-            </div>
-
-            <h4>Information</h4>
-            <div class="input-field col s12">
-              <p id="total"></p>
-            </div>
-            
           </div>
-        </li> -->
-
+        </nav>
+      </div>
+      <ul class="sidenav" id="mobile-demo">
+        <li>
+          <a href="#home">Home</a>
+        </li>
+        <li>
+          <a href="#search">Search</a>
+        </li>
+        <li>
+          <a href="#popular">About</a>
+        </li>
       </ul>
-      <!-- <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
     </header>
 
     <main>
       
-      <div id="map-canvas"></div>
-
-      <div class="sidebar">
-        <div class="card sidebar-item">
-          <div class="card-content">
-            <span class="card-title">Destination</span>
-            <p>Start your journey by giving your starting spoint and destination</p>
-  
-            <div class="input-field">
-              <input placeholder="Catarman" id="inputStartingPoint" type="text" class="" autocomplete="new-password">
-              <label class="active" for="inputStartingPoint">Starting Point</label>
-
-              <input class="hide" type="text" id="address1" placeholder="Nearest address" readonly>
-              <label class="hide" for="address1"></label>
+      <!-- Section: Slider -->
+      <section class="slider">
+        <ul class="slides">
+          <li>
+            <img src="https://image.ibb.co/hbEMux/resort1.jpg" alt="">
+            <div class="caption center-align">
+              <h2>Take Your Dream Vacation</h2>
+              <h5 class="light grey-text text-lighten-3 hide-on-small-only">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam non illo earum cumque id est!</h5>
+              <a href="#" class="btn btn-large cyan">Learn More</a>
             </div>
-  
-            <div class="input-field">
-              <input placeholder="Mars" id="inputDestination" type="text" class="" autocomplete="new-password">
-              <label class="active" for="inputDestination">Destination</label>
-
-              <input id="address2" class="hide" type="text" placeholder="Nearest address" readonly>
-              <label class="active hide" for="address2"></label>
-            </div>  
-
-
-            
-            <input type="" name="latitude2" class="hide latitude form-control" value="" />
-            <input type="" name="longitude2" class="hide longitude form-control" value="" />
-            <input type="" name="marker_status" class="hide form-control" id="info"/>
-            
-          </div>
-          <div class="card-action">
-            <button class="btn waves-effect waves-light blue lighten-2" id="buttonSearch">Search
-              <i class="material-icons left">search</i>
-            </button>
+          </li>
+          <li>
+            <img src="https://image.ibb.co/mn1egc/resort2.jpg" alt="">
+            <div class="caption left-align">
+              <h2>We Work With All Budgets</h2>
+              <h5 class="light grey-text text-lighten-3 hide-on-small-only">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam non illo earum cumque id est!</h5>
+              <a href="#" class="btn btn-large cyan">Learn More</a>
+            </div>
+          </li>
+          <li>
+            <img src="https://image.ibb.co/mbCVnH/resort3.jpg" alt="">
+            <div class="caption right-align">
+              <h2>Group & Individual Getaways</h2>
+              <h5 class="light grey-text text-lighten-3 hide-on-small-only">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam non illo earum cumque id est!</h5>
+              <a href="#" class="btn btn-large cyan">Learn More</a>
+            </div>
+          </li>
+        </ul>
+      </section>
+      
+      <!-- Section: Icon Boxes -->
+      <section class="section section-icons grey lighten-4 center">
+        <div class="container">
+          <div class="row">
+            <div class="col s12 m4">
+              <div class="card-panel">
+                <i class="material-icons large cyan-text">place</i>
+                <h4>Search Places</h4>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem, velit.</p>
+              </div>
+            </div>
+            <div class="col s12 m4">
+              <div class="card-panel">
+                <i class="material-icons large cyan-text">directions</i>
+                <h4>Get Directions</h4>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem, velit.</p>
+              </div>
+            </div>
+            <div class="col s12 m4">
+              <div class="card-panel">
+                <i class="material-icons large cyan-text">thumb_up</i>
+                <h4>Browse Recommendations</h4>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem, velit.</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">Info</span>
-              <div class="row" id="informationCard">
-                
+      </section>
+      
+      <!-- Section: Recommended -->
+      <section id="popular" class="section section-popular scrollspy">
+        <div class="container">
+          <div class="row">
+            <h4 class="center">
+              <span class="cyan-text">Recommended</span> Places</h4>
+            <div class="col s12 m4">
+              <div class="card">
+                <div class="card-image">
+                  <img src="https://image.ibb.co/hbEMux/resort1.jpg" alt="">
+                  <span class="card-title">Cancun, Mexico</span>
+                </div>
+                <div class="card-content">
+                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas aliquid fugiat corporis laudantium, architecto
+                    delectus?
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m4">
+              <div class="card">
+                <div class="card-image">
+                  <img src="https://image.ibb.co/mn1egc/resort2.jpg" alt="">
+                  <span class="card-title">The Bahamas</span>
+                </div>
+                <div class="card-content">
+                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas aliquid fugiat corporis laudantium, architecto
+                    delectus?
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m4">
+              <div class="card">
+                <div class="card-image">
+                  <img src="https://image.ibb.co/mbCVnH/resort3.jpg" alt="">
+                  <span class="card-title">Nova Scotia</span>
+                </div>
+                <div class="card-content">
+                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas aliquid fugiat corporis laudantium, architecto
+                    delectus?
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>    
+          <div class="row">
+            <div class="col s12 center">
+              <a href="#search" class="btn btn-large grey darken-3">
+                <i class="material-icons left">directions</i> Get Directions
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section id="search" class="section cyan darken-1">
+        <div class="row">
+          <h4 class="center-align white-text" style="margin: 20px 0px;">Get Directions</h4>
+          <div class="col s12 m3">
+            <div class="sidebar">
+              <div class="card sidebar-item">
+                <div class="card-content">
+                  <span class="card-title">Destination</span>
+                  <p>Start your journey by giving your starting spoint and destination</p>
+        
+                  <div class="input-field">
+                    <input placeholder="Catarman" id="inputStartingPoint" type="text" class="" autocomplete="new-password">
+                    <label class="active" for="inputStartingPoint">Starting Point</label>
+      
+                    <input class="hide" type="text" id="address1" placeholder="Nearest address" readonly>
+                    <label class="hide" for="address1"></label>
+                  </div>
+        
+                  <div class="input-field">
+                    <input placeholder="Mars" id="inputDestination" type="text" class="" autocomplete="new-password">
+                    <label class="active" for="inputDestination">Destination</label>
+      
+                    <input id="address2" class="hide" type="text" placeholder="Nearest address" readonly>
+                    <label class="active hide" for="address2"></label>
+                  </div>
+      
+      
+                  
+                  <input type="" name="latitude2" class="hide latitude form-control" value="" />
+                  <input type="" name="longitude2" class="hide longitude form-control" value="" />
+                  <input type="" name="marker_status" class="hide form-control" id="info"/>
+                  
+                </div>
+                <div class="card-action">
+                  <button class="btn waves-effect waves-light cyan" id="buttonSearch">Search
+                    <i class="material-icons left">search</i>
+                  </button>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-content">
+                  <span class="card-title">Info</span>
+                    <div class="row" id="informationCard">
+                      
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col s12 m6" style="max-height: 95vh;" id="map-canvas"></div>
+          
+          <div class="col s12 m3 grey" style="min-height: 300px;">
+            <!--Damn-->
+          </div>
+
+        </div>
+        
+        
+      </section>
+      
+      <section class="section grey lighten-4" style="min-height: 600px;">
+        
+      </section>
+      
+
+
     </main>
 
 
