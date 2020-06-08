@@ -23,10 +23,10 @@
                   <a href="#home">Home</a>
                 </li>
                 <li>
-                  <a href="#search">Get Directions</a>
+                  <a href="#popular">Get Started</a>
                 </li>
                 <li>
-                  <a href="#popular">About</a>
+                  <a href="#search">Get Directions</a>
                 </li>
               </ul>
             </div>
@@ -46,7 +46,7 @@
       </ul>
     </header>
 
-    <main>
+    <main id="home">
       
       <!-- Section: Slider -->
       <section class="slider">
@@ -79,25 +79,25 @@
       </section>
       
       <!-- Section: Icon Boxes -->
-      <section class="section section-icons grey lighten-4 center">
+      <section class="section section-icons grey lighten-4 center" style="padding-top:60px;">
         <div class="container">
           <div class="row">
             <div class="col s12 m4">
-              <div class="card-panel">
+              <div class="card-panel features-card z-depth-0">
                 <i class="material-icons large cyan-text">place</i>
                 <h4>Search Places</h4>
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem, velit.</p>
               </div>
             </div>
             <div class="col s12 m4">
-              <div class="card-panel">
+              <div class="card-panel features-card z-depth-0">
                 <i class="material-icons large cyan-text">directions</i>
                 <h4>Get Directions</h4>
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem, velit.</p>
               </div>
             </div>
             <div class="col s12 m4">
-              <div class="card-panel">
+              <div class="card-panel features-card z-depth-0">
                 <i class="material-icons large cyan-text">thumb_up</i>
                 <h4>Browse Recommendations</h4>
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem, velit.</p>
@@ -105,61 +105,34 @@
             </div>
           </div>
         </div>
-      </section>
-      
+      </section>      
       <!-- Section: Recommended -->
       <section id="popular" class="section section-popular scrollspy">
         <div class="container">
-          <div class="row">
-            <h4 class="center">
-              <span class="cyan-text">Recommended</span> Places</h4>
-            <div class="col s12 m4">
-              <div class="card">
-                <div class="card-image">
-                  <img src="https://image.ibb.co/hbEMux/resort1.jpg" alt="">
-                  <span class="card-title">Cancun, Mexico</span>
+          <h4 class="center">
+            <span class="cyan-text">Recommended</span> Places</h4>
+              <!-- Modal Trigger -->
+              <!-- <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a> -->
+
+              <!-- Modal Structure -->
+              <div id="modal1" class="modal">
+                <div class="modal-content">
+                  <h4>Modal Header</h4>
+                  <p>A bunch of text</p>
                 </div>
-                <div class="card-content">
-                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas aliquid fugiat corporis laudantium, architecto
-                    delectus?
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col s12 m4">
-              <div class="card">
-                <div class="card-image">
-                  <img src="https://image.ibb.co/mn1egc/resort2.jpg" alt="">
-                  <span class="card-title">The Bahamas</span>
-                </div>
-                <div class="card-content">
-                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas aliquid fugiat corporis laudantium, architecto
-                    delectus?
-                  </p>
+                <div class="modal-footer">
+                  <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
                 </div>
               </div>
-            </div>
-            <div class="col s12 m4">
-              <div class="card">
-                <div class="card-image">
-                  <img src="https://image.ibb.co/mbCVnH/resort3.jpg" alt="">
-                  <span class="card-title">Nova Scotia</span>
-                </div>
-                <div class="card-content">
-                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas aliquid fugiat corporis laudantium, architecto
-                    delectus?
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
+          <div class="row" id="recommended-places"></div>
+          
+          <!-- <div class="row">
             <div class="col s12 center">
               <a href="#search" class="btn btn-large grey darken-3">
                 <i class="material-icons left">directions</i> Get Directions
               </a>
             </div>
-          </div>
+          </div> -->
         </div>
       </section>
       
@@ -197,7 +170,7 @@
                   
                 </div>
                 <div class="card-action">
-                  <button class="btn waves-effect waves-light cyan" id="buttonSearch">Search
+                  <button class="btn waves-effect waves-light cyan" id="buttonSearch" style="width: 100%;">Search
                     <i class="material-icons left">search</i>
                   </button>
                 </div>
@@ -231,6 +204,31 @@
 
 
     </main>
+
+    <footer class="page-footer cyan darken-1">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">NST</h5>
+            <p class="grey-text text-lighten-4">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          </div>
+          <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">Links</h5>
+            <ul>
+              <li><a class="grey-text text-lighten-3" href="#home">Home</a></li>
+              <li><a class="grey-text text-lighten-3" href="#popular">Get Started</a></li>
+              <li><a class="grey-text text-lighten-3" href="#search">Get Directions</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright cyan darken-2 center-align">
+        <div class="container">
+        © 2020 NST
+        <!-- <a class="grey-text text-lighten-4 right" href="#!">NST</a> -->
+        </div>
+      </div>
+    </footer>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

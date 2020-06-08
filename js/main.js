@@ -16,7 +16,94 @@ window.addEventListener('DOMContentLoaded', (event) => {
       transition: 500,
       interval: 6000
   });
+
+  // var elems = document.querySelectorAll('.modal');
+  // var instances = M.Modal.init(elems, {});
+
+
+
+  // Modal Test
+  let placesRow = document.querySelector('#recommended-places'),
+      placesData = [
+        {
+          name: "Cancun, Mexico",
+          short_description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas aliquid fugiat corporis laudantium, architecto delectus?",
+          image_thumbnail: "https://image.ibb.co/hbEMux/resort1.jpg"
+        },
+        {
+          name: "The Bahamas",
+          short_description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas aliquid fugiat corporis laudantium, architecto delectus?",
+          image_thumbnail: "https://image.ibb.co/mn1egc/resort2.jpg"
+        },
+        {
+          name: "Nova Scotia",
+          short_description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas aliquid fugiat corporis laudantium, architecto delectus?",
+          image_thumbnail: "https://image.ibb.co/mbCVnH/resort3.jpg"
+        }
+      ],
+      divID = () => '_' + Math.random().toString(36).substr(2, 9);
+
+  placesData.forEach(p => {
+    // generate card
+    let newDiv = document.createElement('div'),
+        modalID = divID();
+
+    newDiv.dataset.target  = modalID;
+    newDiv.classList = ["col s12 m4"];
+    newDiv.innerHTML = `
+      <div class="card hoverable" style="cursor: pointer;">
+        <div class="card-image">
+          <img src="${p.image_thumbnail}" alt="">
+          <span class="card-title">${p.name}</span>
+        </div>
+        <div class="card-content">
+          <p>${p.short_description}</p>
+          <a class="waves-effect waves-light btn" data-target="" href=#modal1>button</a>
+        </div>
+        
+      </div>
+    `;
+    placesRow.appendChild(newDiv);
+
+    // generate modal
+    let newModal = document.createElement('div');
+    // newModal.attributes.id = modalID;
+    newModal.setAttribute("id", modalID);
+    newModal.classList = [`modal`];
+    newModal.innerHTML = `
+      <div class="modal-content">
+        <h1>${modalID}</h1>
+        <h4>Modal Header</h4>
+        <p>A bunch of text</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      </div>
+    `;
+    document.body.appendChild(newModal);
+  });
+
+  // var elemsModal = document.querySelectorAll('.modal');
+  // var instancesModal = M.Modal.init(elemsModal, {});
+  // console.log(instancesModal)
+  console.log(placesRow);
+  console.log(placesData);
+
+  
 });
+
+function checkModals(){
+  var elems = document.querySelectorAll('.modal');
+  var instances = M.Modal.init(elems, {});
+  var instance = M.Modal.getInstance(instances);
+
+
+  console.log(elems)
+  console.log(instances)
+  console.log(instance)
+}
+
+
 
 
 var map;
@@ -39,6 +126,7 @@ $(document).ready(function(){
   // Select starting point input
   // on page load
   // startingPoint.focus();
+  // checkModals();
 
 
   $('.add_more_waypoint').on('click', function(){
@@ -140,14 +228,14 @@ geocoder.geocode({
 
 function updateMarkerPosition(latLng) {
   var str =  latLng.lat() +" "+ latLng.lng();
-$('#info').val(str);
+  $('#info').val(str);
 }
 
 function updateMarkerAddress1(str) {
-$('#address1').val(str);
+  $('#address1').val(str);
 }
 function updateMarkerAddress2(str) {
-$('#address2').val(str);
+  $('#address2').val(str);
 }
 // drag end
   var mj;
@@ -441,17 +529,6 @@ infoArray.forEach((info) => {
 google.maps.event.addDomListener(window, 'load', initialize);
 
 
-// $(document).ready(function() {
-//     $('#datetimepicker1').datetimepicker({
-//         icons: {
-//     time: "fa fa-clock-o",
-//     date: "fa fa-calendar",
-//     up: "fa fa-arrow-up",
-//     down: "fa fa-arrow-down"
-//         }
-//     });
-// });
 
-$(document).ready(function(){
-$('.sidenav').sidenav();
-});
+// checkModals();
+
