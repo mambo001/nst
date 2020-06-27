@@ -115,13 +115,15 @@
               <!-- <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a> -->
 
               <!-- Modal Structure -->
-              <div id="modal1" class="modal">
-                <div class="modal-content">
-                  <h4>Modal Header</h4>
-                  <p>A bunch of text</p>
+              <div id="modal1" class="modal " style="width: 65vw; height: 90%; max-height: 90%;">
+                <div class="modal-content container center-align" id="modal1-content" style="display: flex; flex-direction: column; justify-content: space-evenly; padding: 5px; align-items: center;">
+                  data should be here
                 </div>
-                <div class="modal-footer">
-                  <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                <div class="modal-footer" style="display: flex; align-items: center; justify-content: space-around;">
+                  <a href="#!" class="modal-close waves-effect waves-green btn-large cyan" style="width: 80%; max-width: 600px;">
+                    <i class="material-icons left">directions</i>Get Directions
+                  </a>
+                  <!-- <a style="width: 80%;" class="waves-effect waves-light btn-large"><i class="material-icons right">cloud</i>button</a> -->
                 </div>
               </div>
           <div class="row" id="recommended-places"></div>
@@ -178,8 +180,7 @@
               <div class="card">
                 <div class="card-content">
                   <span class="card-title">Info</span>
-                    <div class="row" id="informationCard">
-                      
+                  <div class="row" id="informationCard">
                   </div>
                 </div>
               </div>
@@ -188,8 +189,10 @@
           
           <div class="col s12 m6" style="max-height: 95vh;" id="map-canvas"></div>
           
-          <div class="col s12 m3 grey" style="min-height: 300px;">
-            <!--Damn-->
+          <div class="col s12 m3" style="min-height: 300px;">
+            <span class="card-title">Info</span>
+            <div class="row" id="suggestedCard">
+            </div>
           </div>
 
         </div>
@@ -233,7 +236,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyCPBDWelc9YGjZpJJQBL5-Qc0D7OHwN7II"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
     <script src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/d004434a5ff76e7b97c8b07c01f34ca69e635d97/src/js/bootstrap-datetimepicker.js"></script>
