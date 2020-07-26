@@ -8,19 +8,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-analytics.js"></script>
 </head>
 <body>
     
     <header>
-      <div class="navbar-fixed">
+      <div class="navbar">
         <nav class="cyan darken-2">
           <div class="container">
             <div class="nav-wrapper">
-              <a href="#!" class="brand-logo">NST</a>
+              <a href="#!" class="brand-logo">NST - Biri</a>
               <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                <ul class="right hide-on-med-and-down">
                 <li class="active">
                   <a href="#home">Home</a>
+                </li>
+                <li>
+                  <a href="#about">About Biri</a>
                 </li>
                 <li>
                   <a href="#popular">Get Started</a>
@@ -34,14 +44,17 @@
         </nav>
       </div>
       <ul class="sidenav" id="mobile-demo">
-        <li>
+        <li class="active"></li>
           <a href="#home">Home</a>
         </li>
         <li>
-          <a href="#search">Search</a>
+          <a href="#about">About Biri</a>
         </li>
         <li>
-          <a href="#popular">About</a>
+          <a href="#popular">Get Started</a>
+        </li>
+        <li>
+          <a href="#search">Get Directions</a>
         </li>
       </ul>
     </header>
@@ -105,7 +118,121 @@
             </div>
           </div>
         </div>
-      </section>      
+      </section>
+      
+      <section id="about" class="section section-icons center" style="padding-top:60px;">
+        <div class="container">
+          <h4 class="center">About Biri</h4>
+
+          <div class="row" style="margin-top: 30px;">
+            
+            <div class="col s12 m5 left-align" id="essentials-col" style="margin-top: 30px;">
+              <h5 class="center">Essentials about the island</h5>
+
+              <blockquote class="cyan-blockquote">
+                <h6>Language:</h5>
+                <p class="flow-text">Waray</p>
+                <small>Most locals can understand and speak Tagalog and English.</small>
+              </blockquote>
+              <blockquote class="cyan-blockquote">
+                <h6>Currency:</h5>
+                <p class="flow-text">Philippine peso (PHP, ₱). PHP100 is around USD2.03, EUR 1.74, SGD2.80</p>
+                <small>as of July 2020</small>
+              </blockquote>
+              <blockquote class="cyan-blockquote">
+                <h6>Modes of payment:</h5>
+                <p class="flow-text">Cash, SMART Padala, Globe GCash</p>
+                <small>There are no banks or ATMs on the island.</small>
+              </blockquote>
+              <blockquote class="cyan-blockquote">
+                <h6>Connectivity:</h5>
+                <p class="flow-text">LTE SMART, LTE Globe</p>
+              </blockquote>
+              <blockquote class="cyan-blockquote">
+                <h6>Electricity Info:</h5>
+                <p class="flow-text">220V, 60Hz. Socket Type A, mostly.</p>
+                <small>Electricity is usually available from 12 noon to 12 midnight only.</small>
+              </blockquote>
+              <blockquote class="cyan-blockquote">
+                <h6>Best Time to Visit:</h5>
+                <p class="flow-text">February to May</p>
+                <small>Samar region is along the usual typhoon path. July-November flights can be prone to inconveniences.</small>
+              </blockquote>
+
+              
+            </div>
+
+            <div class="col s12 m7">
+              <h5 class="center">Biri Gallery</h5>
+                <div class="row" style="margin-top: 30px;">
+                  <div class="col s12">
+
+                      <div class="slider hide" id="slide-test">
+                        <ul class="slides">
+                          <li>
+                            <img src="https://www.thepoortraveler.net/wp-content/uploads/2012/09/magsapad-rock-size-biri-island-northern-samar.jpg"> <!-- random image -->
+                            <div class="caption center-align">
+                              <h3>This is our big Tagline!</h3>
+                              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                            </div>
+                          </li>
+                          <li>
+                            <img src="https://i.imgur.com/gxZKD56.jpg"> <!-- random image -->
+                            <div class="caption left-align">
+                              <h3>Left Aligned Caption</h3>
+                              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                            </div>
+                          </li>
+                          <li>
+                            <img src="https://media-cdn.tripadvisor.com/media/photo-o/0b/12/fe/9d/photo5jpg.jpg"> <!-- random image -->
+                            <div class="caption right-align">
+                              <h3>Right Aligned Caption</h3>
+                              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                            </div>
+                          </li>
+                          <li>
+                            <img src="http://biri-nsamar.gov.ph/wp-content/uploads/2018/03/Tourist-Spot-7.gif"> <!-- random image -->
+                            <div class="caption center-align">
+                              <h3>This is our big Tagline!</h3>
+                              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="m-p-g">
+                        <div class="m-p-g__thumbs" data-google-image-layout data-max-height="350">
+
+                          <img src="http://biri-nsamar.gov.ph/wp-content/uploads/2018/03/Tourist-Spot-7.gif" 
+                          data-full="http://biri-nsamar.gov.ph/wp-content/uploads/2018/03/Tourist-Spot-7.gif" class="m-p-g__thumbs-img" />
+                          <img src="https://i.imgur.com/gxZKD56.jpg" 
+                          data-full="https://i.imgur.com/gxZKD56.jpg" class="m-p-g__thumbs-img" />
+                          <img src="https://media-cdn.tripadvisor.com/media/photo-o/05/38/cd/0e/biri-island.jpg" 
+                          data-full="https://media-cdn.tripadvisor.com/media/photo-o/05/38/cd/0e/biri-island.jpg" class="m-p-g__thumbs-img" />
+                          <img src="https://www.thepoortraveler.net/wp-content/uploads/2012/09/magsapad-rock-size-biri-island-northern-samar.jpg" 
+                          data-full="https://www.thepoortraveler.net/wp-content/uploads/2012/09/magsapad-rock-size-biri-island-northern-samar.jpg" class="m-p-g__thumbs-img" />
+                          <img src="https://media-cdn.tripadvisor.com/media/photo-o/0b/12/fe/9d/photo5jpg.jpg" 
+                          data-full="https://media-cdn.tripadvisor.com/media/photo-o/0b/12/fe/9d/photo5jpg.jpg" />
+                          <img src="https://media-cdn.tripadvisor.com/media/photo-s/03/57/2f/dd/the-view-at-breakfast.jpg" 
+                          data-full="https://media-cdn.tripadvisor.com/media/photo-s/03/57/2f/dd/the-view-at-breakfast.jpg" />
+                          <img src="https://media-cdn.tripadvisor.com/media/photo-o/12/9a/bb/bc/breathtakingly-beautiful.jpg" 
+                          data-full="https://media-cdn.tripadvisor.com/media/photo-o/12/9a/bb/bc/breathtakingly-beautiful.jpg" class="m-p-g__thumbs-img" />
+                          
+                        </div>
+                      
+                        <div class="m-p-g__fullscreen"></div>
+                      </div>
+                  </div>
+
+                </div>
+                 
+              </div>
+
+          </div>
+          
+        </div>
+      </section>
+
       <!-- Section: Recommended -->
       <section id="popular" class="section section-popular scrollspy">
         <div class="container">
@@ -172,7 +299,7 @@
                   
                 </div>
                 <div class="card-action">
-                  <button class="btn waves-effect waves-light cyan" id="buttonSearch" style="width: 100%;">Search
+                  <button class="btn waves-effect waves-light cyan" id="buttonSearch" style="width: 100%; width: 100%;display: flex;justify-content: center;flex-direction: row-reverse;">Search
                     <i class="material-icons left">search</i>
                   </button>
                 </div>
@@ -237,8 +364,33 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyCPBDWelc9YGjZpJJQBL5-Qc0D7OHwN7II"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-    <script src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/d004434a5ff76e7b97c8b07c01f34ca69e635d97/src/js/bootstrap-datetimepicker.js"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/material-photo-gallery.min.js"></script>
+
+    <script>
+        var elem = document.querySelector('.m-p-g');
+
+        document.addEventListener('DOMContentLoaded', function() {
+          var gallery = new MaterialPhotoGallery(elem);
+        });
+
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyCtWYzyPpw1bRpngHt8NQJiHTX-xDp6Xz4",
+          authDomain: "nst-db.firebaseapp.com",
+          databaseURL: "https://nst-db.firebaseio.com",
+          projectId: "nst-db",
+          storageBucket: "nst-db.appspot.com",
+          messagingSenderId: "400098915955",
+          appId: "1:400098915955:web:96e6fd8a93cd4391965c06",
+          measurementId: "G-FNH1JMLVCV"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
+        const db = firebase.firestore();
+    </script>
+
     <script src="./js/main.js"></script>
 </body>
 </html>

@@ -2,59 +2,7 @@
 // 563492ad6f9170000100000157d4d535979146c0a53ce90ae914527d
 // fetch
 
-let placesRow = document.querySelector('#recommended-places'),
-      placesData = [
-        {
-          id: 0,
-          name: "Biri Island Rock Formations",
-          short_description: "Biri Island Rock Formations are among the list of incredible tourist spots in Northern Samar situated Biri Island off the northern shores of the mainland.",
-          long_description: "Biri Island Rock Formations are among the list of incredible tourist spots in Northern Samar situated Biri Island off the northern shores of the mainland. This destination is composed of 7 gigantic rock formations namely: Magasang, Magsapad, Macadlaw, Puhunan, Bel-at, Caranas and Pinanahawan. These are the stunning sights to behold and explore coined as the place of “the battle of the gods” formed from tectonic plate movements, strong winds and ferocious waves. Snorkeling, scuba diving and surfing are also best things to do here. The site is a 20-minute boat ride away from the mainland.",
-          image_thumbnail: "https://i.imgur.com/gxZKD56.jpg"
-        },
-        {
-          id: 1,
-          name: "Pink Beach",
-          short_description: "Pink Beach is one of the most beautiful and remarkable beaches in the country tucked in the eastern side of Sila Island in the province of Northern Samar.",
-          long_description: "Pink Beach is one of the most beautiful and remarkable beaches in the country tucked in the eastern side of Sila Island in the province of Northern Samar. The pink sand beach is actually composed of tiny fragments of red corals and shells mixed with the creamy white sand. Locals has it that it is at its full glory during summer and the sun is up creating a beautiful sight of a pink sand beach. The alluring emerald seawater on the beach is teeming with corals and fishes good for swimming and snorkeling. Most visitors come here on day tour but overnight camping is also allowed.",
-          image_thumbnail: "https://i.imgur.com/8Py62ON.jpg"
-        },
-        {
-          id: 2,
-          name: "Capul Lighthouse",
-          short_description: "Aside from the Batag Island Lighthouse, another historical lighthouse of the Northern Samar is the century-old Capul Lighthouse situated on the northern tip of Capul Island.",
-          long_description: "Aside from the Batag Island Lighthouse, another historical lighthouse of the Northern Samar is the century-old Capul Lighthouse situated on the northern tip of Capul Island. It was built on 1896 to guide the ships crossing the San Bernardino Strait which provided great help during the Acapulco-Manila galleon trade. Just few steps away from the grassy slope where the lighthouse is standing is a viewing area offering splendid view of San Bernardino Strait, Mount Bulusan of Sorsogon, looming mountains, coastlines and crushing waves. The island is 30-minute boat ride away from the mainland.",
-          image_thumbnail: "https://imgur.com/KitJr8P.jpg"
-        },
-
-        {
-          id: 3,
-          name: "Veriato Falls",
-          short_description: "Veriato Falls is another beautiful waterfalls in Northern Samar, a favorite weekend getaway destination among the local residents and tourists of the province.",
-          long_description: "Veriato Falls is another beautiful waterfalls in Northern Samar, a favorite weekend getaway destination among the local residents and tourists of the province. The refreshing waters cascades on a rocky slope about 30 meters high down the wide natural pool good for swimming where deepest part is about 10 feet. The rocks on both sides of the falls serve as picnic grounds for visitor well-shaded with verdant foliage and green trees. Tourists can conveniently visit the falls since it can be accessed following a paved road and a short trek on an established trail.",
-          image_thumbnail: "https://i.imgur.com/2VxJt0u.jpg"
-        },
-        {
-          id: 4,
-          name: "Laoang Church",
-          short_description: "Another historical church in Northern Samar is the Saint Michael the Archangel Parish Church commonly known as Laoang Church situated at the heart of the town.",
-          long_description: "Aside from the Batag Island Lighthouse, another historical lighthouse of the Northern Samar is the century-old Capul Lighthouse situated on the northern tip of Capul Island. It was built on 1896 to guide the ships crossing the San Bernardino Strait which provided great help during the Acapulco-Manila galleon trade. Just few steps away from the grassy slope where the lighthouse is standing is a viewing area offering splendid view of San Bernardino Strait, Mount Bulusan of Sorsogon, looming mountains, coastlines and crushing waves. The island is 30-minute boat ride away from the mainland.",
-          image_thumbnail: "https://imgur.com/ls24RIc.jpg"
-        },
-        {
-          id: 5,
-          name: "Pinipisakan Falls",
-          short_description: "Pinipisakan falls is 4 layered waterfalls and known to be the most beautiful waterfalls in the Philippines.",
-          long_description: "Pinipisakan falls is 4 layered waterfalls and known to be the most beautiful waterfalls in the Philippines. Sulpan Cave has 5 km length underground cave chambers with giants stalactites & stalagmites the famous to see inside the cave is the giants ells.",
-          image_thumbnail: "https://imgur.com/HliUqNV.jpg"
-        },
-        {
-          id: 6,
-          name: "Sleeping Lion Rock Formation",
-          short_description: "A natural pool in Northern Samar. The rock formation on the left side is popularly known as the 'Sleeping Lion' within the local. This is located at Brgy. Cabatuan, Palapag, Northern Samar.",
-          long_description: "Aside from the Batag Island Lighthouse, another historical lighthouse of the Northern Samar is the century-old Capul Lighthouse situated on the northern tip of Capul Island. It was built on 1896 to guide the ships crossing the San Bernardino Strait which provided great help during the Acapulco-Manila galleon trade. Just few steps away from the grassy slope where the lighthouse is standing is a viewing area offering splendid view of San Bernardino Strait, Mount Bulusan of Sorsogon, looming mountains, coastlines and crushing waves. The island is 30-minute boat ride away from the mainland.",
-          image_thumbnail: "https://imgur.com/1jDGPUB.jpg"
-        }
-      ];
+let placesRow = document.querySelector('#recommended-places');
 
 window.addEventListener('DOMContentLoaded', (event) => {
     
@@ -71,50 +19,49 @@ window.addEventListener('DOMContentLoaded', (event) => {
       interval: 6000
   });
 
+  var sliderTest = document.querySelector('#slide-test');
+  M.Slider.init(sliderTest, {});
+
   // var elems = document.querySelectorAll('.modal');
   // var instances = M.Modal.init(elems, {});
 
 
 
   // Modal Test
+  function renderPlaces(data){
+      // generate card
+      let newDiv = document.createElement('div');
+
+      // newDiv.dataset.target  = modalID;
+      newDiv.classList = ["col s12 m6 l4"];
+      newDiv.innerHTML = `
+        <div data-id="${data.id}" class="card hoverable toggle-modal" style="cursor: pointer;">
+          <div class="card-image">
+            <img class="card-img" src="${data.image_thumbnail}" alt="">
+            <span class="card-title card-img-title">${data.name}</span>
+          </div>
+          <div class="card-content">
+            <p class="">${data.short_description}</p>
+          </div>
+          
+        </div>
+      `;
+      placesRow.appendChild(newDiv);
+  }
+
+  // db.collection('places').get().then(snapshot => {
+  //   snapshot.docs.forEach(doc => {
+  //     const docData = doc.data();
+  //       docData.id = doc.id;
+
+  //      console.log(docData);
+  //      renderPlaces(docData);
+  //   })
+  // });
+
   
-  placesData.forEach(p => {
-    // generate card
-    let newDiv = document.createElement('div');
+  
 
-    // newDiv.dataset.target  = modalID;
-    newDiv.classList = ["col s12 m6 l4"];
-    newDiv.innerHTML = `
-      <div data-id="${p.id}" class="card hoverable toggle-modal" style="cursor: pointer;">
-        <div class="card-image">
-          <img class="card-img" src="${p.image_thumbnail}" alt="">
-          <span class="card-title card-img-title">${p.name}</span>
-        </div>
-        <div class="card-content">
-          <p class="">${p.short_description}</p>
-        </div>
-        
-      </div>
-    `;
-    placesRow.appendChild(newDiv);
-
-    // generate modal
-    // let newModal = document.createElement('div');
-    // // newModal.attributes.id = modalID;
-    // newModal.setAttribute("id", modalID);
-    // newModal.classList = [`modal`];
-    // newModal.innerHTML = `
-    //   <div class="modal-content">
-    //     <h1>${modalID}</h1>
-    //     <h4>Modal Header</h4>
-    //     <p>A bunch of text</p>
-    //   </div>
-    //   <div class="modal-footer">
-    //     <a href="#!" class="btn cyan waves-effect waves-green btn-flat">Get Directions</a>
-    //   </div>
-    // `;
-    // document.body.appendChild(newModal);
-  });
 
   checkToggleables();  
 });
@@ -139,12 +86,12 @@ function checkToggleables(){
   var instances = M.Modal.init(elems, {});
   var instance = M.Modal.getInstance(instances[0]);
   
-  console.log(instances[0]);
+  // console.log(instances[0]);
 
   elementArrays.forEach(e => {
     e.addEventListener('click', () => {
-      console.log('card-modal clicked');
-      console.log(e.getAttribute('data-id'));
+      // console.log('card-modal clicked');
+      // console.log(e.getAttribute('data-id'));
       var placeID = e.getAttribute('data-id');
       var data = placesData[placeID];
       // name
@@ -164,7 +111,7 @@ function checkToggleables(){
     });
   })
 
-  console.log(elementArrays)
+  // console.log(elementArrays)
   // checkModals();
 }
 
@@ -312,16 +259,17 @@ function updateMarkerAddress2(str) {
 
 function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
-  var catarman = new google.maps.LatLng(12.379054, 124.820326);
+  // var catarman = new google.maps.LatLng(12.379054, 124.820326);
+  var biri = new google.maps.LatLng(12.6211101,124.4035144);
   var mapOptions = {
     zoom: 11,
-    center: catarman
+    center: biri
   }
 
 map = new google.maps.Map(document.getElementById('map-canvas'), {
   mapTypeId: google.maps.MapTypeId.ROADMAP,
-  zoom: 11,
-  center: catarman
+  zoom: 13,
+  center: biri
 });
 
 // direction service code
