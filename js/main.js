@@ -2,7 +2,12 @@
 // 563492ad6f9170000100000157d4d535979146c0a53ce90ae914527d
 // fetch
 
-let placesRow = document.querySelector('#recommended-places');
+let placesRow = document.querySelector('#recommended-places'),
+    aboutContent =  document.querySelector('#about-content'),
+    loadMoreBtn = document.querySelector('#read-more-overlay > .btn');
+
+
+    loadMoreBtn.addEventListener('click', loadMore);
 
 window.addEventListener('DOMContentLoaded', (event) => {
     
@@ -65,6 +70,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   checkToggleables();  
 });
+
+function loadMore(e){
+  e.target.parentElement.style.display = 'none';
+  aboutContent.classList.toggle("load-more");
+}
+
+
 
 function checkModals(){
   var elems = document.querySelectorAll('.modal');

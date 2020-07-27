@@ -86,6 +86,30 @@ main {
   color: rgba(33,33,33,0.55);
 }
 
+#about-content{
+  max-height: 650px;
+  position: relative;
+  overflow: hidden;
+}
+
+#read-more-overlay{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 45px 0;
+  background-image: linear-gradient(to bottom, transparent, #f1f1f1);
+  z-index: 1;
+}
+
+.load-more{
+  max-height: 100vh!important;
+  overflow: visible!important;
+  /* position: initial!important; */
+}
+
 @media only screen 
   and (min-width: 600px) 
   and (max-width: 899px){

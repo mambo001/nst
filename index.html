@@ -120,9 +120,12 @@
         </div>
       </section>
       
-      <section id="about" class="section section-icons center" style="padding-top:60px;">
-        <div class="container">
-          <h4 class="center">About Biri</h4>
+      <section id="about" class="section section-icons center" style="padding-top:20px;">
+        <div class="container" id="about-content">
+          <h4 class="center">
+            <span class="cyan-text">About</span> 
+            Biri
+          </h4>
 
           <div class="row" style="margin-top: 30px;">
             
@@ -162,62 +165,33 @@
               
             </div>
 
-            <div class="col s12 m7">
+            <div class="col s12 m7" style="margin-top: 30px;">
               <h5 class="center">Biri Gallery</h5>
                 <div class="row" style="margin-top: 30px;">
                   <div class="col s12">
-
-                      <div class="slider hide" id="slide-test">
-                        <ul class="slides">
-                          <li>
-                            <img src="https://www.thepoortraveler.net/wp-content/uploads/2012/09/magsapad-rock-size-biri-island-northern-samar.jpg"> <!-- random image -->
-                            <div class="caption center-align">
-                              <h3>This is our big Tagline!</h3>
-                              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                            </div>
-                          </li>
-                          <li>
-                            <img src="https://i.imgur.com/gxZKD56.jpg"> <!-- random image -->
-                            <div class="caption left-align">
-                              <h3>Left Aligned Caption</h3>
-                              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                            </div>
-                          </li>
-                          <li>
-                            <img src="https://media-cdn.tripadvisor.com/media/photo-o/0b/12/fe/9d/photo5jpg.jpg"> <!-- random image -->
-                            <div class="caption right-align">
-                              <h3>Right Aligned Caption</h3>
-                              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                            </div>
-                          </li>
-                          <li>
-                            <img src="http://biri-nsamar.gov.ph/wp-content/uploads/2018/03/Tourist-Spot-7.gif"> <!-- random image -->
-                            <div class="caption center-align">
-                              <h3>This is our big Tagline!</h3>
-                              <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-
                       <div class="m-p-g">
                         <div class="m-p-g__thumbs" data-google-image-layout data-max-height="350">
 
                           <img src="http://biri-nsamar.gov.ph/wp-content/uploads/2018/03/Tourist-Spot-7.gif" 
                           data-full="http://biri-nsamar.gov.ph/wp-content/uploads/2018/03/Tourist-Spot-7.gif" class="m-p-g__thumbs-img" />
+
                           <img src="https://i.imgur.com/gxZKD56.jpg" 
                           data-full="https://i.imgur.com/gxZKD56.jpg" class="m-p-g__thumbs-img" />
+
                           <img src="https://media-cdn.tripadvisor.com/media/photo-o/05/38/cd/0e/biri-island.jpg" 
                           data-full="https://media-cdn.tripadvisor.com/media/photo-o/05/38/cd/0e/biri-island.jpg" class="m-p-g__thumbs-img" />
+
                           <img src="https://www.thepoortraveler.net/wp-content/uploads/2012/09/magsapad-rock-size-biri-island-northern-samar.jpg" 
                           data-full="https://www.thepoortraveler.net/wp-content/uploads/2012/09/magsapad-rock-size-biri-island-northern-samar.jpg" class="m-p-g__thumbs-img" />
+
                           <img src="https://media-cdn.tripadvisor.com/media/photo-o/0b/12/fe/9d/photo5jpg.jpg" 
-                          data-full="https://media-cdn.tripadvisor.com/media/photo-o/0b/12/fe/9d/photo5jpg.jpg" />
+                          data-full="https://media-cdn.tripadvisor.com/media/photo-o/0b/12/fe/9d/photo5jpg.jpg" class="m-p-g__thumbs-img" />
+
                           <img src="https://media-cdn.tripadvisor.com/media/photo-s/03/57/2f/dd/the-view-at-breakfast.jpg" 
-                          data-full="https://media-cdn.tripadvisor.com/media/photo-s/03/57/2f/dd/the-view-at-breakfast.jpg" />
+                          data-full="https://media-cdn.tripadvisor.com/media/photo-s/03/57/2f/dd/the-view-at-breakfast.jpg" class="m-p-g__thumbs-img" />
+
                           <img src="https://media-cdn.tripadvisor.com/media/photo-o/12/9a/bb/bc/breathtakingly-beautiful.jpg" 
-                          data-full="https://media-cdn.tripadvisor.com/media/photo-o/12/9a/bb/bc/breathtakingly-beautiful.jpg" class="m-p-g__thumbs-img" />
-                          
+                          data-full="https://media-cdn.tripadvisor.com/media/photo-o/12/9a/bb/bc/breathtakingly-beautiful.jpg" class="m-p-g__thumbs-img" />                      
                         </div>
                       
                         <div class="m-p-g__fullscreen"></div>
@@ -228,6 +202,10 @@
                  
               </div>
 
+          </div>
+
+          <div id="read-more-overlay">
+            <a class="btn btn-large cyan darken-2">Load More</a>
           </div>
           
         </div>
@@ -327,7 +305,7 @@
         
       </section>
       
-      <section class="section grey lighten-4" style="min-height: 600px;">
+      <section class="section grey lighten-4 hide" style="min-height: 600px;">
         
       </section>
       
@@ -335,7 +313,7 @@
 
     </main>
 
-    <footer class="page-footer cyan darken-1">
+    <footer class="page-footer cyan darken-3">
       <div class="container">
         <div class="row">
           <div class="col l6 s12">
@@ -352,7 +330,7 @@
           </div>
         </div>
       </div>
-      <div class="footer-copyright cyan darken-2 center-align">
+      <div class="footer-copyright cyan darken-4 center-align">
         <div class="container">
         © 2020 NST
         <!-- <a class="grey-text text-lighten-4 right" href="#!">NST</a> -->
