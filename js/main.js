@@ -4,13 +4,17 @@
 
 let placesRow = document.querySelector('#recommended-places'),
     aboutContent =  document.querySelector('#about-content'),
-    loadMoreBtn = document.querySelector('#read-more-overlay > .btn');
+    loadMoreBtn = document.querySelector('#read-more-overlay > .btn'),
+    inputStartingPoint = document.querySelector('#inputStartingPoint');
 
 
     loadMoreBtn.addEventListener('click', loadMore);
 
 window.addEventListener('DOMContentLoaded', (event) => {
-    
+
+  // Set default main location 
+  inputStartingPoint.value = "Biri Port, Coastal Road, Biri, Northern Samar, Philippines";
+
   // Sidenav
   const sideNav = document.querySelector('.sidenav');
   M.Sidenav.init(sideNav, {});
@@ -30,39 +34,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
   // var elems = document.querySelectorAll('.modal');
   // var instances = M.Modal.init(elems, {});
 
+  db.collection('places').get().then(snapshot => {
+    snapshot.docs.forEach(doc => {
+      const docData = doc.data();
+        docData.id = doc.id;
 
-
-  // Modal Test
-  function renderPlaces(data){
-      // generate card
-      let newDiv = document.createElement('div');
-
-      // newDiv.dataset.target  = modalID;
-      newDiv.classList = ["col s12 m6 l4"];
-      newDiv.innerHTML = `
-        <div data-id="${data.id}" class="card hoverable toggle-modal" style="cursor: pointer;">
-          <div class="card-image">
-            <img class="card-img" src="${data.image_thumbnail}" alt="">
-            <span class="card-title card-img-title">${data.name}</span>
-          </div>
-          <div class="card-content">
-            <p class="">${data.short_description}</p>
-          </div>
-          
-        </div>
-      `;
-      placesRow.appendChild(newDiv);
-  }
-
-  // db.collection('places').get().then(snapshot => {
-  //   snapshot.docs.forEach(doc => {
-  //     const docData = doc.data();
-  //       docData.id = doc.id;
-
-  //      console.log(docData);
-  //      renderPlaces(docData);
-  //   })
-  // });
+       console.log(docData);
+       renderPlaces(docData);
+    })
+  });
 
   
   
@@ -76,7 +56,26 @@ function loadMore(e){
   aboutContent.classList.toggle("load-more");
 }
 
+function renderPlaces(data){
+  // generate card
+  let newDiv = document.createElement('div');
 
+  // newDiv.dataset.target  = modalID;
+  newDiv.classList = [""];
+  newDiv.innerHTML = `
+    <div data-id="${data.id}" class="card hoverable toggle-modal" style="cursor: pointer;">
+      <div class="card-image">
+        <img class="card-img" src="${data.image_thumbnail}" alt="">
+        <span class="card-title card-img-title">${data.name}</span>
+      </div>
+      <div class="card-content">
+        <p class="short-description">${data.short_description}</p>
+      </div>
+      
+    </div>
+  `;
+  placesRow.appendChild(newDiv);
+}
 
 function checkModals(){
   var elems = document.querySelectorAll('.modal');
@@ -227,27 +226,27 @@ var geocoder = new google.maps.Geocoder();
 
 
 function geocodePosition(pos,box_no) {
-geocoder.geocode({
-  latLng: pos
-}, function(responses) {
-  if (responses && responses.length > 0) {
-      // geocodeObject.push(responses);
-      if(box_no == '1'){
-          updateMarkerAddress1(responses[0].formatted_address);
-      }
-      else{
-          updateMarkerAddress2(responses[0].formatted_address);
-      }
+  geocoder.geocode({
+    latLng: pos
+  }, function(responses) {
+    if (responses && responses.length > 0) {
+        // geocodeObject.push(responses);
+        if(box_no == '1'){
+            updateMarkerAddress1(responses[0].formatted_address);
+        }
+        else{
+            updateMarkerAddress2(responses[0].formatted_address);
+        }
 
-  } else {
-      if(box_no == '1'){
-          updateMarkerAddress1('Cannot determine address at this location.');
-      }
-      else{
-          updateMarkerAddress2('Cannot determine address at this location.');
-      }
-  }
-});
+    } else {
+        if(box_no == '1'){
+            updateMarkerAddress1('Cannot determine address at this location.');
+        }
+        else{
+            updateMarkerAddress2('Cannot determine address at this location.');
+        }
+    }
+  });
 }
 
 function updateMarkerPosition(latLng) {
@@ -272,15 +271,16 @@ function updateMarkerAddress2(str) {
 function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
   // var catarman = new google.maps.LatLng(12.379054, 124.820326);
-  var biri = new google.maps.LatLng(12.6211101,124.4035144);
+  var biri = new google.maps.LatLng(12.6813955,124.359174);
   var mapOptions = {
-    zoom: 11,
-    center: biri
+    zoom: 13,
+    center: biri,
+    labels: true
   }
 
 map = new google.maps.Map(document.getElementById('map-canvas'), {
-  mapTypeId: google.maps.MapTypeId.ROADMAP,
-  zoom: 13,
+  mapTypeId: google.maps.MapTypeId.HYBRID,
+  zoom: 16,
   center: biri
 });
 
@@ -293,110 +293,176 @@ var input2 = document.querySelector('#inputDestination');
 var searchBox1 = new google.maps.places.SearchBox((input1));
 var searchBox2 = new google.maps.places.SearchBox((input2));
 
+// Initialize Starting Point marker
+var initialMarkerPosition =  new google.maps.LatLng(12.681398, 124.361314),
+    marker = new google.maps.Marker({
+      position: initialMarkerPosition,
+      title: initialMarkerPosition.name,
+      map: map,
+      label: {
+        text: "Biri Island Port",
+        fontWeight: "bold",
+        color: "white",
+        textShadow: "2px 2px 0px black"
+      }
+    });
+
 // search function start here
 google.maps.event.addListener(searchBox1, 'places_changed', function() {
-  var places = searchBox1.getPlaces();
-  // console.log("searchbox 1: " + JSON.stringify(places));
-  geocodeObject.push(places);
+    var places = searchBox1.getPlaces();
+    // console.log("searchbox 1: " + JSON.stringify(places));
+    // geocodeObject.push(places);
 
-  if (places.length == 0) {
-    return;
-  }
-  for (var i = 0, marker; marker = markers[i]; i++) {
-    marker.setMap(null);
-  }
-  // For each place, get the icon, place name, and location.
-  var bounds = new google.maps.LatLngBounds();
-  for (var i = 0, place; place = places[i]; i++) {
-    // Create a marker for each place.
-     marker = new google.maps.Marker({
-      map: map,
-      title: place.name,
-      position: place.geometry.location,
-      draggable: true
-    });
-  $(".latitude").val(place.geometry.location.lat());
-  $(".longitude").val(place.geometry.location.lng());
-  updateMarkerPosition(marker.getPosition());
-  geocodePosition(marker.getPosition(),'1');
+    if (places.length == 0) {
+      geocodeObject.push(places);
+      return;
+    }
+    for (var i = 0, marker; marker = markers[i]; i++) {
+      marker.setMap(null);
+    }
+    // For each place, get the icon, place name, and location.
+    var bounds = new google.maps.LatLngBounds();
+    for (var i = 0, place; place = places[i]; i++) {
+        // Create a marker for each place.
+        marker = new google.maps.Marker({
+          map: map,
+          title: place.name,
+          position: place.geometry.location,
+          draggable: true
+        });
 
-google.maps.event.addListener(marker, 'dragend', function() {
-  geocodePosition(marker.getPosition(),'1');
-  $(".latitude").val(marker.getPosition().lat());
-  $(".longitude").val(marker.getPosition().lat());
+        $(".latitude").val(place.geometry.location.lat());
+        $(".longitude").val(place.geometry.location.lng());
+        updateMarkerPosition(marker.getPosition());
+        geocodePosition(marker.getPosition(),'1');
+
+        google.maps.event.addListener(marker, 'dragend', function() {
+          geocodePosition(marker.getPosition(),'1');
+          $(".latitude").val(marker.getPosition().lat());
+          $(".longitude").val(marker.getPosition().lat());
+        });
+
+        markers.push(marker);
+        bounds.extend(place.geometry.location);
+    }
+    if($('#address2').val().length > 0 && $('#address2').val() != 'undefined'){
+        console.log("searchbox 1 make route");
+        setTimeout(function() {
+            calcRoute();
+        }, 500);
+    } else {
+        map.fitBounds(bounds);
+        map.setZoom(9);
+    }
 });
-markers.push(marker);
-bounds.extend(place.geometry.location);
-  }
-  if($('#address2').val().length > 0 && $('#address2').val() != 'undefined')
-  {
-      console.log("searchbox 1 make route");
-      setTimeout(function() {
-          calcRoute();
-      }, 500);
-  }
-  else{
-      map.fitBounds(bounds);
-      map.setZoom(9);
-  }
-});
+
+
+// function testCalcRoute() {
+//   var places = searchBox1.getPlaces();
+//   // console.log("searchbox 1: " + JSON.stringify(places));
+//   geocodeObject.push(places);
+
+//   if (places.length == 0) {
+//     return;
+//   }
+//   for (var i = 0, marker; marker = markers[i]; i++) {
+//     marker.setMap(null);
+//   }
+//   // For each place, get the icon, place name, and location.
+//   var bounds = new google.maps.LatLngBounds();
+//   for (var i = 0, place; place = places[i]; i++) {
+//       // Create a marker for each place.
+//       marker = new google.maps.Marker({
+//         map: map,
+//         title: place.name,
+//         position: place.geometry.location,
+//         draggable: true
+//       });
+
+//       $(".latitude").val(place.geometry.location.lat());
+//       $(".longitude").val(place.geometry.location.lng());
+//       updateMarkerPosition(marker.getPosition());
+//       geocodePosition(marker.getPosition(),'1');
+
+//       google.maps.event.addListener(marker, 'dragend', function() {
+//         geocodePosition(marker.getPosition(),'1');
+//         $(".latitude").val(marker.getPosition().lat());
+//         $(".longitude").val(marker.getPosition().lat());
+//       });
+
+//       markers.push(marker);
+//       bounds.extend(place.geometry.location);
+//   }
+//   if($('#address2').val().length > 0 && $('#address2').val() != 'undefined'){
+//       console.log("searchbox 1 make route");
+//       setTimeout(function() {
+//           calcRoute();
+//       }, 500);
+//   } else {
+//       map.fitBounds(bounds);
+//       map.setZoom(9);
+//   }
+// }
 
 
 google.maps.event.addListener(searchBox2, 'places_changed', function() {
 
-let places1 = searchBox2.getPlaces(),
-    destination = places1[0].geometry.location,
-    infoCard = document.querySelector('#informationCard');
+    // testCalcRoute();
 
-//reset Info Card 
-infoCard.innerHTML = "";
-// console.log("searchbox 2: " + JSON.stringify());
-geocodeObject.push(places1);
+    let places1 = searchBox2.getPlaces(),
+        destination = places1[0].geometry.location,
+        infoCard = document.querySelector('#informationCard');
 
-if (places1.length == 0) {
-  return;
-}
-for (var i = 0, marker; marker = markers[i]; i++) {
-  marker.setMap(null);
-}
-// For each place, get the icon, place name, and location.
-var bounds = new google.maps.LatLngBounds();
-for (var i = 0, place; place = places1[i]; i++) {
-  // Create a marker for each place.
-  marker = new google.maps.Marker({
-        map: map,
-        title: place.name,
-        position: place.geometry.location,
-        draggable: true
-  });
-  $(".latitude2").val(place.geometry.location.lat());
-  $(".longitude2").val(place.geometry.location.lng());
-  updateMarkerPosition(marker.getPosition());
-  geocodePosition(marker.getPosition(),'2');
+    //reset Info Card 
+    infoCard.innerHTML = "";
+    console.log("searchbox 2: " + JSON.stringify());
+    geocodeObject.push(places1);
 
-  google.maps.event.addListener(marker, 'dragend', function() {
-    geocodePosition(marker.getPosition(),'2');
-    $(".latitude2").val(marker.getPosition().lat());
-    $(".longitude2").val(marker.getPosition().lat());
-  });
-  markers.push(marker);
-  bounds.extend(place.geometry.location);
-}
-  if($('#address1').val().length > 0 && $('#address1').val() != 'undefined')
-  {
-      console.log("searchbox 2 make route");
-      setTimeout(function() {
-          calcRoute();
-          distanceMatrix();
-          console.log("destination pos: " + JSON.stringify(destination));
-          getNearbyPlaces(destination);
-          
-      }, 500);
-  }
-  else{
-      map.fitBounds(bounds);
-      map.setZoom(9);
-  }
+    if (places1.length == 0) {
+      return;
+    }
+
+    for (var i = 0, marker; marker = markers[i]; i++) {
+      marker.setMap(null);
+    }
+    // For each place, get the icon, place name, and location.
+    var bounds = new google.maps.LatLngBounds();
+    console.log("bounds: " + bounds)
+    for (var i = 0, place; place = places1[i]; i++) {
+      // Create a marker for each place.
+      marker = new google.maps.Marker({
+            map: map,
+            title: place.name,
+            position: place.geometry.location,
+            draggable: true
+      });
+      $(".latitude2").val(place.geometry.location.lat());
+      $(".longitude2").val(place.geometry.location.lng());
+      updateMarkerPosition(marker.getPosition());
+      geocodePosition(marker.getPosition(),'2');
+
+      google.maps.event.addListener(marker, 'dragend', function() {
+        geocodePosition(marker.getPosition(),'2');
+        $(".latitude2").val(marker.getPosition().lat());
+        $(".longitude2").val(marker.getPosition().lat());
+      });
+      markers.push(marker);
+      bounds.extend(place.geometry.location);
+    }
+
+    if($('#address1').val().length > 0 && $('#address1').val() != 'undefined'){
+        console.log("searchbox 2 make route");
+        setTimeout(function() {
+            calcRoute();
+            distanceMatrix();
+            console.log("destination pos: " + JSON.stringify(destination));
+            getNearbyPlaces(destination);
+            
+        }, 500);
+    } else { 
+        map.fitBounds(bounds);
+        map.setZoom(9);
+    }
 });
 //   google.maps.event.addListener(map, 'bounds_changed', function() {
 //   var bounds = map.getBounds();
@@ -425,7 +491,7 @@ service.getDistanceMatrix(
   {
     origins: [origin1, origin2],
     destinations: [destinationA, destinationB],
-    travelMode: 'DRIVING',
+    travelMode: 'TRANSIT',
     // transitOptions: TransitOptions,
     // drivingOptions: DrivingOptions,
     // unitSystem: UnitSystem,
@@ -463,56 +529,103 @@ service.getDistanceMatrix(
 }
 
 function getNearbyPlaces(pos) {
-let service = new google.maps.places.PlacesService(map);
-// console.log(pos);
-// pos = { lat: latLngArray[1][0], lng: latLngArray[1][1] };
-service.nearbySearch({
-  location: pos,
-  // radius: '15000',
-  // type: ['tourist_attraction'],
-  keyword: 'resort',
-  rankBy: google.maps.places.RankBy.DISTANCE
-}, function(results){
-  // console.log("nearBySearch: " + JSON.stringify(results));
-  var suggestedCard = document.querySelector('#suggestedCard');
-  var nearPlaces = JSON.stringify(results);
-  console.table(nearPlaces)
-});
+  let service = new google.maps.places.PlacesService(map);
+  console.log(pos.lat());
+  // pos = { lat: latLngArray[1][0], lng: latLngArray[1][1] };
+  service.nearbySearch({
+    location: pos,
+    // radius: '15000',
+    type: ['tourist_attraction'],
+    // keyword: 'resort',
+    rankBy: google.maps.places.RankBy.DISTANCE
+  }, function(results){
+    // console.log("nearBySearch: " + JSON.stringify(results));
+    var suggestedCard = document.querySelector('#suggestedCard');
+    var nearPlaces = JSON.stringify(results);
+    console.table(nearPlaces)
+    var idk = results.map(e => {
+      // let object = [];
+      // console.log("photos: " + e.photos.getUrl())
+      return {
+        name: e.name,
+        type: e.types,
+        vicinity: e.vicinity,
+        photos: e.photos,
+        businessStatus: e.business_status
+      };
+    })
+    console.log(idk);
+    console.log(geocodeObject);
+
+  });
 }
+
+function getRecommendedPlaces(){
+  let service = new google.maps.places.PlacesService(map),
+      biriCoordinates = {};
+  
+  console.log(biriCoordinates);
+  service.nearbySearch({
+    location: biriCoordinates,
+    // radius: '15000',
+    type: ['tourist_attraction'],
+    // keyword: 'resort',
+    rankBy: google.maps.places.RankBy.DISTANCE
+  }, (results) => {
+    // id, name, photos, rating, types, user_ratings_total, vicinity
+    // let filteredResult = results.filter(r => {
+    //   return {
+    //     id: r.id,
+    //     name: r.name,
+    //     photos: r.photos,
+    //     rating: r.rating,
+    //     types: r.types,
+    //     user_ratings_total: r.user_ratings_total,
+    //     vicinity: r.vicinity
+    //   };
+    // });
+    console.log(results);
+    // console.log(filteredResult);
+    // return filteredResult;
+  }); 
+}
+
+// getRecommendedPlaces();
 
 
 function calcRoute() {
-var start = $('#address1').val();
-var end = $('#address2').val();
-var way_points_arr = [];
-for(var i=1; i<=parseInt($('.total_waypoint').val());i++){
-    way_points_arr.push({
-        location:$('.address'+i).val(),
-        stopover:true});
-}
-
-var request = {
-    origin: start,
-    destination: end,
-    waypoints: way_points_arr,
-    optimizeWaypoints: true,
-    travelMode: google.maps.TravelMode.DRIVING
-};
-directionsService.route(request, function(response, status) {
-  if (status == google.maps.DirectionsStatus.OK) {
-    directionsDisplay.setDirections(response);
-    // console.log(response.geocoded_waypoints[1].place_id);
-    // response.geocoded_waypoints[1].place_id
-    var route = response.routes[0];
-    // computeTotalDistance(response);
-
-    let geo = geocodeObject.map((g) => {
-      return g[0].geometry.location;
-    });
-    latLngArray = geo;
-    console.table("GEO: " + latLngArray);
+  var start = $('#address1').val();
+  var end = $('#address2').val();
+  var way_points_arr = [];
+  for(var i=1; i<=parseInt($('.total_waypoint').val());i++){
+      way_points_arr.push({
+          location:$('.address'+i).val(),
+          stopover:true});
   }
-});
+
+  var request = {
+      origin: start,
+      destination: end,
+      waypoints: way_points_arr,
+      optimizeWaypoints: true,
+      // travelMode: google.maps.TravelMode.DRIVING
+      travelMode: google.maps.TravelMode.TRANSIT
+  };
+  directionsService.route(request, function(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
+      // console.log(response.geocoded_waypoints[1].place_id);
+      // response.geocoded_waypoints[1].place_id
+      var route = response.routes[0];
+      // computeTotalDistance(response);
+
+      let geo = geocodeObject.map((g) => {
+        return g[0].geometry.location;
+      });
+      latLngArray = geo;
+      console.table("GEO: " + latLngArray);
+    }
+  });
 }
 // console.log("GEO EXECUTE: " + geo)
 
@@ -534,28 +647,28 @@ function computeTotalDistance(result) {
 }
 
 function generateUUID() {
-return"uuid-"+((new Date).getTime().toString(16)+Math.floor(1E7*Math.random()).toString(16));
+  return"uuid-"+((new Date).getTime().toString(16)+Math.floor(1E7*Math.random()).toString(16));
 }
 
 function getInfo(infoArray) {
-console.log("object: " + JSON.stringify(infoArray));
-infoArray.forEach((info) => {
-  let infoCard = document.querySelector('#informationCard'),
-      createUUID = generateUUID(),
-      div = document.createElement('div');
+  console.log("object: " + JSON.stringify(infoArray));
+  infoArray.forEach((info) => {
+    let infoCard = document.querySelector('#informationCard'),
+        createUUID = generateUUID(),
+        div = document.createElement('div');
 
-  // reset infocard
-  // infoCard.innerHTML = '';
-  div.innerHTML = `
-    <input readonly value="${info.value}" id="${createUUID}" type="text" >
-    <label for="${createUUID}" class="active" style="text-transform: capitalize;">${info.label}</label>
-  `;
-  div.classList.add('input-field');
+    // reset infocard
+    // infoCard.innerHTML = '';
+    div.innerHTML = `
+      <input readonly value="${info.value}" id="${createUUID}" type="text" >
+      <label for="${createUUID}" class="active" style="text-transform: capitalize;">${info.label}</label>
+    `;
+    div.classList.add('input-field');
 
-  
+    
 
-  infoCard.appendChild(div);
-});
+    infoCard.appendChild(div);
+  });
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

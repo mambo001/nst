@@ -57,8 +57,14 @@ main {
 }
 
 .card-img{
-  height: 300px;
-  max-height: 300px;
+  height: 400px;
+  /* max-height: 300px; */
+}
+
+#recommended-places{
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 }
 
 .card-img-title{
@@ -325,24 +331,6 @@ main {
   color: red;
 }
 
-/* DEMO
-body {
-  background: #fefefe;
-  color: white;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  font-family: 'Roboto Mono';
-}
-
-h2 {
-  font-weight: 300;
-  margin: 4vh 4vw;
-  letter-spacing: 3px;
-  color: grey;
-  text-transform: uppercase;
-} */
-
 .demo-btn {
   display: inline-block;
   margin: 0 2.5px 4vh 2.5px;
@@ -357,6 +345,19 @@ h2 {
 
 .demo-btn:hover {
   background: rgba(0, 0, 0, 0.12);
+}
+
+#about-fees > li {
+  display: flex;
+  justify-content: space-between;
+}
+
+#about-fees span{
+  font-weight: bold;
+}
+
+.short-description{
+
 }
 
 @media (max-width: 640px) {
