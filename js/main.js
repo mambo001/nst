@@ -65,7 +65,7 @@ function renderPlaces(data){
   newDiv.innerHTML = `
     <div data-id="${data.id}" class="card hoverable toggle-modal" style="cursor: pointer;">
       <div class="card-image">
-        <img class="card-img" src="${data.image_thumbnail}" alt="">
+        <img loading=lazy class="card-img" src="${data.image_thumbnail}" alt="">
         <span class="card-title card-img-title">${data.name}</span>
       </div>
       <div class="card-content">

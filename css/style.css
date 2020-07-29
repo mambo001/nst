@@ -61,6 +61,18 @@ main {
   max-height: 315px;
 }
 
+.card-content{
+  height: 117px;
+  max-height: 205px;
+  overflow: hidden;
+}
+
+.card-content > p {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;  
+}
+
 #recommended-places{
   display: grid;
   grid-gap: 1rem;
