@@ -5,9 +5,21 @@
 let placesRow = document.querySelector('#recommended-places'),
     aboutContent =  document.querySelector('#about-content'),
     loadMoreBtn = document.querySelector('#read-more-overlay > .btn'),
-    inputStartingPoint = document.querySelector('#inputStartingPoint');
+    inputStartingPoint = document.querySelector('#inputStartingPoint'),
+    createAccountForm = document.querySelector('#createAccountForm'),
+    loginAccountForm = document.querySelector('#loginAccountForm'),
+    firstName = document.querySelector('#firstName'),
+    lastName = document.querySelector('#lastName'),
+    email = document.querySelector('#email'),
+    emailError = document.querySelector('#emailError'),
+    password = document.querySelector('#password'),
+    loginEmail = document.querySelector('#loginEmail'),
+    loginPassword = document.querySelector('#loginPassword');
+    
 
 
+    createAccountForm.addEventListener('submit', createNewAccount);
+    loginAccountForm.addEventListener('submit', doLogin);
     loadMoreBtn.addEventListener('click', loadMore);
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -19,6 +31,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
   const sideNav = document.querySelector('.sidenav');
   M.Sidenav.init(sideNav, {});
   
+  // User Dropdown
+  var dropdownElements = document.querySelectorAll('.dropdown-trigger');
+  var dropdownInstances = M.Dropdown.init(dropdownElements, {});
+
+  // Registration Modal
+  var modalElements = document.querySelectorAll('.modal');
+  var modalInstances = M.Modal.init(modalElements, {
+    startingTop: '10%',
+    endingTop: '15%'
+  });
+
+  console.log(modalInstances)
+
   // Slider
   const slider = document.querySelector('.slider');
   M.Slider.init(slider, {
@@ -34,15 +59,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
   // var elems = document.querySelectorAll('.modal');
   // var instances = M.Modal.init(elems, {});
 
-  db.collection('places').get().then(snapshot => {
-    snapshot.docs.forEach(doc => {
-      const docData = doc.data();
-        docData.id = doc.id;
+  // db.collection('places').get().then(snapshot => {
+  //   snapshot.docs.forEach(doc => {
+  //     const docData = doc.data();
+  //       docData.id = doc.id;
 
-       console.log(docData);
-       renderPlaces(docData);
-    })
-  });
+  //      console.log(docData);
+  //      renderPlaces(docData);
+  //   })
+  // });
 
   
   
@@ -54,6 +79,124 @@ window.addEventListener('DOMContentLoaded', (event) => {
 function loadMore(e){
   e.target.parentElement.style.display = 'none';
   aboutContent.classList.toggle("load-more");
+}
+
+function createNewAccount(e){
+  e.preventDefault();
+  let userInfo = {
+    get fullName() {
+      return `${this.firstName} ${this.lastName}`
+    } 
+  };
+  userInfo.firstName = firstName.value;
+  userInfo.lastName = lastName.value;
+  userInfo.email = email.value;
+  userInfo.password = password.value;
+
+  console.log("full name: " + userInfo.fullName)
+
+  firebase.auth().createUserWithEmailAndPassword(userInfo.email, userInfo.password)
+  .then(res => {
+    if (res.user.uid){
+      // console.log(res.user.uid);
+      var user = firebase.auth().currentUser;
+      user.updateProfile({
+        displayName: userInfo.fullName
+      }).then(function() {
+        // Update successful.
+        console.log("update success")
+      }).catch(function(error) {
+        // An error happened.
+        console.log("name update failed")
+      });
+
+      var toastHTML = '<span>Account has been created successfully!</span><a class="btn-flat toast-action cyan-text modal-trigger" href="#loginForm">Login</a>';
+      M.toast({html: toastHTML});
+      $('#registrationForm').modal('close');
+
+
+      console.log("Signed in user: " + user)
+    }
+  })
+  .catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // console.log()
+    if (errorMessage == "The email address is already in use by another account."){
+      email.classList.add('invalid');
+      emailError.classList.remove('hide');  
+      emailError.textContent = errorMessage;
+
+      var user = firebase.auth().currentUser;
+      console.log("Signed in user: " + JSON.stringify(user))
+    }
+    // ...
+  });
+
+  console.log("submitted: " + JSON.stringify(userInfo))
+}
+
+function doLogin(e){
+
+  e.preventDefault();
+
+  let userInfo = {},
+      loginEmailError = document.querySelector("#loginEmailError"),
+      loginPasswordError = document.querySelector("#loginPasswordError"),
+      loggedinUser = document.querySelector("#loggedinUser");
+
+  userInfo.email = loginEmail.value;
+  userInfo.password = loginPassword.value;
+
+  firebase.auth().signInWithEmailAndPassword(userInfo.email, userInfo.password)
+  .then((data) => {
+    console.log("data: " + data)
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in.
+        var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        var providerData = user.providerData;
+        
+        loggedinUser.textContent = displayName;
+        var toastHTML = '<span>Logged in successfully!</span>';
+        M.toast({html: toastHTML});
+        $('#loginForm').modal('close');
+        // ...
+      } else {
+        // User is signed out.
+        // ...
+      }
+    });
+  })
+  .catch(function(error) {
+    // Handle Errors here.
+    // auth/user-not-found
+    // auth/wrong-password
+    loginEmailError
+    loginPasswordError
+    var errorCode = error.code;
+    var errorMessage = error.message + " " + errorCode;
+
+    if (errorCode == "auth/user-not-found"){
+      loginEmailError.textContent = errorMessage;
+      loginEmailError.classList.remove('hide');
+    } else if (errorCode == "auth/wrong-password"){
+      loginPasswordError.textContent = errorMessage;
+      loginPasswordError.classList.remove('hide');
+    } else {
+      console.log("Login error: " + errorMessage + " " + errorCode);
+    }
+    // ...
+  });
+
+  
+
 }
 
 function renderPlaces(data){

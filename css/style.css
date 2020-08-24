@@ -56,18 +56,24 @@ main {
   flex: 1 0 auto;
 }
 
-.card-img{
+#registrationForm,
+#loginForm{
+  width: 40vw!important;
+  max-width: 600px!important;
+}
+
+#popular .card-img{
   height: 300px;
   max-height: 315px;
 }
 
-.card-content{
+#popular .card-content{
   height: 117px;
   max-height: 205px;
   overflow: hidden;
 }
 
-.card-content > p {
+#popular .card-content > p {
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;  
