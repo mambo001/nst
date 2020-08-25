@@ -64,7 +64,7 @@
       </ul>
 
       <ul class="sidenav" id="mobile-demo">
-        <li class="active"></li>
+        <li class="active">
           <a href="#home">Home</a>
         </li>
         <li>
@@ -76,13 +76,29 @@
         <li>
           <a href="#search">Get Directions</a>
         </li>
+
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li>
+              <a class="collapsible-header" id="mobileLoggedinUser">Guest<i class="material-icons">account_circle</i></a>
+              <div class="collapsible-body">
+                <ul>
+                  <li><a class="modal-trigger" href="#registrationForm">Create an account</a></li>
+                  <li><a class="modal-trigger" href="#loginForm">Log in</a></li>
+                  <li class="divider" tabindex="-1"></li>
+                  <li><a href="#!">Log out</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
       </ul>
     </header>
 
     <main id="home">
 
       <!-- Modal Structure -->
-      <div id="registrationForm" class="modal" style="width: 40vw;">
+      <div id="registrationForm" class="modal" style="">
         <div class="modal-content">
           <form method="post" action="/home" id="createAccountForm" accept-charset="UTF-8"><input type="hidden" name="form_type" value="create_customer"><input type="hidden" name="utf8" value="✓">
             <h4 class="center">Create Account</h4>
@@ -130,7 +146,7 @@
       </div>
 
       <!-- Modal Structure -->
-      <div id="loginForm" class="modal" style="width: 40vw;">
+      <div id="loginForm" class="modal" style="">
         <div class="modal-content">
           <form method="post" id="loginAccountForm" accept-charset="UTF-8"><input type="hidden" name="form_type" value="create_customer">
             <h4 class="center">Log in</h4>
@@ -374,7 +390,7 @@
                     <label class="active" for="inputStartingPoint">Starting Point</label>
       
                     <input class="hide" type="text" id="address1" placeholder="Nearest address" readonly>
-                    <label class="hide" for="address1"></label>
+                    <label class="active hide" for="address1"></label>
                   </div>
         
                   <div class="input-field">

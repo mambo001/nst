@@ -56,11 +56,11 @@ main {
   flex: 1 0 auto;
 }
 
-#registrationForm,
+/* #registrationForm,
 #loginForm{
   width: 40vw!important;
   max-width: 600px!important;
-}
+} */
 
 #popular .card-img{
   height: 300px;
@@ -158,6 +158,12 @@ main {
 @media only screen and (min-width: 960px){
   .flow-text {
     font-size: 1.608rem!important;
+  }
+
+  #registrationForm,
+  #loginForm{
+    width: 40vw!important;
+    max-width: 600px!important;
   }
 }
 

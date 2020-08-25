@@ -6,6 +6,7 @@ let placesRow = document.querySelector('#recommended-places'),
     aboutContent =  document.querySelector('#about-content'),
     loadMoreBtn = document.querySelector('#read-more-overlay > .btn'),
     inputStartingPoint = document.querySelector('#inputStartingPoint'),
+    address1 = document.querySelector('#address1'),
     createAccountForm = document.querySelector('#createAccountForm'),
     loginAccountForm = document.querySelector('#loginAccountForm'),
     firstName = document.querySelector('#firstName'),
@@ -26,10 +27,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   // Set default main location 
   inputStartingPoint.value = "Biri Port, Coastal Road, Biri, Northern Samar, Philippines";
-
+  address1.value = "Biri Port, Coastal Road, Biri, Northern Samar, Philippines";
   // Sidenav
   const sideNav = document.querySelector('.sidenav');
   M.Sidenav.init(sideNav, {});
+
+  // Mobile-Nav Collapsible/Dropdown
+  $('.collapsible').collapsible();
   
   // User Dropdown
   var dropdownElements = document.querySelectorAll('.dropdown-trigger');
@@ -299,20 +303,24 @@ $(document).ready(function(){
       // Getting last waypoint no
       last_waypoint_no = parseInt($('.total_waypoint').val()) + 1;
       console.log("Adding waypoint value-->"+last_waypoint_no);
-      var myhtml = "<div class='trip_loopn'><h4>Waypoint #: "+
-         last_waypoint_no +
-         " : </h4><input class='controls form-control pac-input' type='text' placeholder='Search Box'><h4> Waypoint " +
-          last_waypoint_no +
-          "  Nearest Address</h4><input class='controls form-control address" +
-          last_waypoint_no +
-          "' type='text' placeholder='Waypoint " +
-          last_waypoint_no +
-          " Nearest address'><input TYPE='hidden' name='latitude"+last_waypoint_no+
-          "' class='latitude"+last_waypoint_no+
-          " form-control' value /><input type='hidden' name='longitude"+
-          last_waypoint_no+
-          "' class='longitude"+last_waypoint_no+" form-control' value /><input type='hidden' name='marker_status"+last_waypoint_no+"' class='form-control' id='info'/><input type='hidden' name='my_waypoint_no' class='my_waypoint_no' value='"+last_waypoint_no+"'></input></div>";
-      // appending new waypoint html
+
+      var myhtml = `
+          <div class='trip_loopn'>
+
+          <h4>Waypoint #: ${last_waypoint_no}: </h4>
+          <input class='controls form-control pac-input' type='text' placeholder='Search Box'>
+
+          <h4> Waypoint ${last_waypoint_no} Nearest Address</h4>
+          <input class='controls form-control address ${last_waypoint_no}' type='text' placeholder='Waypoint ${last_waypoint_no} Nearest address'>
+
+          <input type='hidden' name='latitude"${$last_waypoint_no}' class='latitude" ${last_waypoint_no} form-control' value />
+          <input type='hidden' name='longitude${last_waypoint_no}' class='longitude ${last_waypoint_no} form-control' value />
+          <input type='hidden' name='marker_status ${last_waypoint_no}' class='form-control' id='info'/>
+          <input type='hidden' name='my_waypoint_no' class='my_waypoint_no' value='${last_waypoint_no}'></input>
+
+          </div>
+        `;      
+          // appending new waypoint html
       $('.add_waypoint_container').append(myhtml);
       var newInput = [];
       var newEl = $('.pac-input')[last_waypoint_no];
@@ -452,14 +460,14 @@ var initialMarkerPosition =  new google.maps.LatLng(12.681398, 124.361314),
 
 // search function start here
 google.maps.event.addListener(searchBox1, 'places_changed', function() {
-    var places = searchBox1.getPlaces();
-    // console.log("searchbox 1: " + JSON.stringify(places));
-    // geocodeObject.push(places);
 
+    // Getting nearby places
+    var places = searchBox1.getPlaces();
     if (places.length == 0) {
       geocodeObject.push(places);
       return;
     }
+
     for (var i = 0, marker; marker = markers[i]; i++) {
       marker.setMap(null);
     }
@@ -476,6 +484,7 @@ google.maps.event.addListener(searchBox1, 'places_changed', function() {
 
         $(".latitude").val(place.geometry.location.lat());
         $(".longitude").val(place.geometry.location.lng());
+
         updateMarkerPosition(marker.getPosition());
         geocodePosition(marker.getPosition(),'1');
 
@@ -488,65 +497,18 @@ google.maps.event.addListener(searchBox1, 'places_changed', function() {
         markers.push(marker);
         bounds.extend(place.geometry.location);
     }
+
     if($('#address2').val().length > 0 && $('#address2').val() != 'undefined'){
         console.log("searchbox 1 make route");
         setTimeout(function() {
             calcRoute();
+            distanceMatrix();
         }, 500);
     } else {
         map.fitBounds(bounds);
-        map.setZoom(9);
+        map.setZoom(13);
     }
 });
-
-
-// function testCalcRoute() {
-//   var places = searchBox1.getPlaces();
-//   // console.log("searchbox 1: " + JSON.stringify(places));
-//   geocodeObject.push(places);
-
-//   if (places.length == 0) {
-//     return;
-//   }
-//   for (var i = 0, marker; marker = markers[i]; i++) {
-//     marker.setMap(null);
-//   }
-//   // For each place, get the icon, place name, and location.
-//   var bounds = new google.maps.LatLngBounds();
-//   for (var i = 0, place; place = places[i]; i++) {
-//       // Create a marker for each place.
-//       marker = new google.maps.Marker({
-//         map: map,
-//         title: place.name,
-//         position: place.geometry.location,
-//         draggable: true
-//       });
-
-//       $(".latitude").val(place.geometry.location.lat());
-//       $(".longitude").val(place.geometry.location.lng());
-//       updateMarkerPosition(marker.getPosition());
-//       geocodePosition(marker.getPosition(),'1');
-
-//       google.maps.event.addListener(marker, 'dragend', function() {
-//         geocodePosition(marker.getPosition(),'1');
-//         $(".latitude").val(marker.getPosition().lat());
-//         $(".longitude").val(marker.getPosition().lat());
-//       });
-
-//       markers.push(marker);
-//       bounds.extend(place.geometry.location);
-//   }
-//   if($('#address2').val().length > 0 && $('#address2').val() != 'undefined'){
-//       console.log("searchbox 1 make route");
-//       setTimeout(function() {
-//           calcRoute();
-//       }, 500);
-//   } else {
-//       map.fitBounds(bounds);
-//       map.setZoom(9);
-//   }
-// }
-
 
 google.maps.event.addListener(searchBox2, 'places_changed', function() {
 
@@ -558,7 +520,6 @@ google.maps.event.addListener(searchBox2, 'places_changed', function() {
 
     //reset Info Card 
     infoCard.innerHTML = "";
-    console.log("searchbox 2: " + JSON.stringify());
     geocodeObject.push(places1);
 
     if (places1.length == 0) {
@@ -579,6 +540,7 @@ google.maps.event.addListener(searchBox2, 'places_changed', function() {
             position: place.geometry.location,
             draggable: true
       });
+
       $(".latitude2").val(place.geometry.location.lat());
       $(".longitude2").val(place.geometry.location.lng());
       updateMarkerPosition(marker.getPosition());
@@ -621,52 +583,52 @@ google.maps.event.addListener(searchBox2, 'places_changed', function() {
 
 // get distance and duration
 function distanceMatrix(){
-var start = $('#address1').val();
-var end = $('#address2').val();
+  var start = $('#address1').val();
+  var end = $('#address2').val();
 
-var origin1 = new google.maps.LatLng(latLngArray[0]);
-var origin2 = start;
-var destinationA = end;
-var destinationB = new google.maps.LatLng(latLngArray[1]);
+  // var origin1 = new google.maps.LatLng(latLngArray[0]);
+  // var origin2 = start;
+  // var destinationA = end;
+  // var destinationB = new google.maps.LatLng(latLngArray[1]);
 
-var service = new google.maps.DistanceMatrixService();
-service.getDistanceMatrix(
-  {
-    origins: [origin1, origin2],
-    destinations: [destinationA, destinationB],
-    travelMode: 'TRANSIT',
-    // transitOptions: TransitOptions,
-    // drivingOptions: DrivingOptions,
-    // unitSystem: UnitSystem,
-    // avoidHighways: Boolean,
-    // avoidTolls: Boolean,
-  }, function callback(response, status) {
-    // See Parsing the Results for
-    // the basics of a callback function.
-    // console.log('distance matrix: ' + status);
-    // console.log(response);
-    // console.log("array: " + JSON.stringify(response.rows[1].elements));
-    let destinationObject = response.rows[1].elements[0],
-        destinationDistance = destinationObject.distance,
-        destinationDuration = destinationObject.duration;
+  var origin1 = start;
+  var origin2 = end;
+  var destinationA = new google.maps.LatLng(latLngArray[0]);
+  var destinationB = new google.maps.LatLng(latLngArray[1]);
+
+  var service = new google.maps.DistanceMatrixService();
+  service.getDistanceMatrix({
+      origins: [origin1, origin2],
+      destinations: [destinationA, destinationB],
+      travelMode: 'TRANSIT',
+    }, function callback(response, status) {
+          // See Parsing the Results for
+          // the basics of a callback function.
+          console.log('distance matrix: ' + status);
+          console.log(response);
+          console.log("array: " + JSON.stringify(response.rows[1].elements));
+          let destinationObject = response.rows[1].elements[0],
+              destinationDistance = destinationObject.distance,
+              destinationDuration = destinationObject.duration;
 
 
-    // console.log("dd: " + JSON.stringify(destinationDistance) + JSON.stringify(destinationDuration));
-    // needs validation
-    destinationInfo.push({
-      label: "duration",
-      value: destinationDuration.text
-    });
+          // console.log("dd: " + JSON.stringify(destinationDistance) + JSON.stringify(destinationDuration));
+          // needs validation
+          destinationInfo.push({
+            label: "duration",
+            value: destinationDuration.text
+          });
 
-    destinationInfo.push({
-      label: "distance",
-      value: destinationDistance.text
-    });
-    // add info sidebar
-    getInfo(destinationInfo);
-    destinationInfo = [];
-    console.table("info: " + JSON.stringify(destinationObject));
-  });
+          destinationInfo.push({
+            label: "distance",
+            value: destinationDistance.text
+          });
+          // add info sidebar
+          getInfo(destinationInfo);
+          destinationInfo = [];
+          console.table("info: " + JSON.stringify(destinationObject));
+        }
+  );
 
 
 }
@@ -685,7 +647,7 @@ function getNearbyPlaces(pos) {
     // console.log("nearBySearch: " + JSON.stringify(results));
     var suggestedCard = document.querySelector('#suggestedCard');
     var nearPlaces = JSON.stringify(results);
-    console.table(nearPlaces)
+    // console.table(nearPlaces)
     var idk = results.map(e => {
       // let object = [];
       // console.log("photos: " + e.photos.getUrl())
@@ -740,7 +702,10 @@ function calcRoute() {
   var start = $('#address1').val();
   var end = $('#address2').val();
   var way_points_arr = [];
-  for(var i=1; i<=parseInt($('.total_waypoint').val());i++){
+
+  // 12345
+  console.log("total waypoint" + $('.total_waypoint').val())
+  for(i=1; i <= parseInt($('.total_waypoint').val()); i++){
       way_points_arr.push({
           location:$('.address'+i).val(),
           stopover:true});
