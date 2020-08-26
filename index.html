@@ -41,7 +41,6 @@
                 <li>
                   <a href="#search">Get Directions</a>
                 </li>
-
                 <li class="valign-wrapper">
                   <!-- Dropdown Trigger -->
                   <a class='valign-wrapper dropdown-trigger' href='#' data-target='dropdown1'>
@@ -95,83 +94,7 @@
       </ul>
     </header>
 
-    <main id="home">
-
-      <!-- Modal Structure -->
-      <div id="registrationForm" class="modal" style="">
-        <div class="modal-content">
-          <form method="post" action="/home" id="createAccountForm" accept-charset="UTF-8"><input type="hidden" name="form_type" value="create_customer"><input type="hidden" name="utf8" value="✓">
-            <h4 class="center">Create Account</h4>
-
-            <div class="input-field">
-              <label for="firstName" class="">
-                First Name
-              </label>
-              <input type="text" id="firstName" autofocus="">
-            </div>
-
-            <div class="input-field">
-              <label for="lastName">
-                Last Name
-              </label>
-              <input type="text" id="lastName">
-            </div>
-
-            <div class="input-field">
-              <label for="email">
-                Email
-              </label>
-              <input type="email" id="email" class="" value="" spellcheck="false" autocomplete="off" autocapitalize="off">
-              <small class="red-text hide" id="emailError">Email is already registered.</small>
-            </div>
-
-            <div class="input-field">
-              <label for="CreatePassword">
-                Password
-              </label>
-              <input type="password" id="password">
-            </div>
-
-            <div class="input-field row">
-              <div class="col s6">
-                <input type="submit" style="width: 100%;" value="Create" class="btn-large cyan z-depth-0">
-              </div>
-              <div class="col s6">
-                <a style="width: 100%;" class="btn-large btn-flat z-depth-0">Cancel</a>
-              </div>
-              <!-- <input type="submit" value="Create" class="btn-large z-depth-0"> -->
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <!-- Modal Structure -->
-      <div id="loginForm" class="modal" style="">
-        <div class="modal-content">
-          <form method="post" id="loginAccountForm" accept-charset="UTF-8"><input type="hidden" name="form_type" value="create_customer">
-            <h4 class="center">Log in</h4>
-
-            <div class="input-field">
-              <label for="loginEmail">
-                Email
-              </label>
-              <input type="email" id="loginEmail" class="" placeholder="email@example.com">
-              <small class="red-text hide" id="loginEmailError">Email doesn't seem to be registered.</small>
-            </div>
-
-            <div class="input-field">
-              <label for="loginPassword">
-                Password
-              </label>
-              <input type="password" id="loginPassword">
-              <small class="red-text hide" id="loginPasswordError">Email doesn't seem to be registered.</small>
-            </div>
-
-            <input type="submit" style="width: 100%;" value="Log in" class="btn-large cyan z-depth-0">
-          </form>
-        </div>
-      </div>
-      
+    <main id="home">    
       <!-- Section: Slider -->
       <section class="slider">
         <ul class="slides">
@@ -444,6 +367,89 @@
 
 
     </main>
+  <!-- Modals -->
+  <!-- Modal Structure -->
+  <div id="place-modal" class="modal bottom-sheet full-sheet">
+    <a href="#recommended-places" class="close-modal-btn" style="margin-top: 10px;"><i class="material-icons medium grey-text">arrow_back</i></a>
+    <div class="container">
+      <div class="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="registrationForm" class="modal" style="">
+    <div class="modal-content">
+      <form method="post" action="/home" id="createAccountForm" accept-charset="UTF-8"><input type="hidden" name="form_type" value="create_customer"><input type="hidden" name="utf8" value="✓">
+        <h4 class="center">Create Account</h4>
+
+        <div class="input-field">
+          <label for="firstName" class="">
+            First Name
+          </label>
+          <input type="text" id="firstName" autofocus="">
+        </div>
+
+        <div class="input-field">
+          <label for="lastName">
+            Last Name
+          </label>
+          <input type="text" id="lastName">
+        </div>
+
+        <div class="input-field">
+          <label for="email">
+            Email
+          </label>
+          <input type="email" id="email" class="" value="" spellcheck="false" autocomplete="off" autocapitalize="off">
+          <small class="red-text hide" id="emailError">Email is already registered.</small>
+        </div>
+
+        <div class="input-field">
+          <label for="CreatePassword">
+            Password
+          </label>
+          <input type="password" id="password">
+        </div>
+
+        <div class="input-field row">
+          <div class="col s6">
+            <input type="submit" style="width: 100%;" value="Create" class="btn-large cyan z-depth-0">
+          </div>
+          <div class="col s6">
+            <a style="width: 100%;" class="btn-large btn-flat z-depth-0">Cancel</a>
+          </div>
+          <!-- <input type="submit" value="Create" class="btn-large z-depth-0"> -->
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="loginForm" class="modal" style="">
+    <div class="modal-content">
+      <form method="post" id="loginAccountForm" accept-charset="UTF-8"><input type="hidden" name="form_type" value="create_customer">
+        <h4 class="center">Log in</h4>
+
+        <div class="input-field">
+          <label for="loginEmail">
+            Email
+          </label>
+          <input type="email" id="loginEmail" class="" placeholder="email@example.com">
+          <small class="red-text hide" id="loginEmailError">Email doesn't seem to be registered.</small>
+        </div>
+
+        <div class="input-field">
+          <label for="loginPassword">
+            Password
+          </label>
+          <input type="password" id="loginPassword">
+          <small class="red-text hide" id="loginPasswordError">Email doesn't seem to be registered.</small>
+        </div>
+
+        <input type="submit" style="width: 100%;" value="Log in" class="btn-large cyan z-depth-0">
+      </form>
+    </div>
+  </div>
 
     <footer class="page-footer cyan darken-3">
       <div class="container">

@@ -15,10 +15,11 @@ let placesRow = document.querySelector('#recommended-places'),
     emailError = document.querySelector('#emailError'),
     password = document.querySelector('#password'),
     loginEmail = document.querySelector('#loginEmail'),
-    loginPassword = document.querySelector('#loginPassword');
+    loginPassword = document.querySelector('#loginPassword'),
+    closeModalBtn= document.querySelectorAll('.close-modal-btn');
     
 
-
+    closeModalBtn.forEach(btn => btn.addEventListener('click', () => $('#place-modal').modal('close')));
     createAccountForm.addEventListener('submit', createNewAccount);
     loginAccountForm.addEventListener('submit', doLogin);
     loadMoreBtn.addEventListener('click', loadMore);
@@ -60,18 +61,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
   var sliderTest = document.querySelector('#slide-test');
   M.Slider.init(sliderTest, {});
 
-  // var elems = document.querySelectorAll('.modal');
-  // var instances = M.Modal.init(elems, {});
+  var elems = document.querySelectorAll('.modal');
+  var instances = M.Modal.init(elems, {});
 
-  // db.collection('places').get().then(snapshot => {
-  //   snapshot.docs.forEach(doc => {
-  //     const docData = doc.data();
-  //       docData.id = doc.id;
 
-  //      console.log(docData);
-  //      renderPlaces(docData);
-  //   })
-  // });
+  db.collection('places').get().then(snapshot => {
+    snapshot.docs.forEach(doc => {
+      const docData = doc.data();
+        docData.id = doc.id;
+
+      //  console.log(docData);
+       renderPlaces(docData);
+       
+    });
+    setPlacesEventListeners();
+  });
 
   
   
@@ -79,6 +83,281 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   checkToggleables();  
 });
+
+function setPlacesEventListeners(){
+  let places = document.querySelectorAll('.tourist-places-card');
+  places.forEach((place) => {
+    place.addEventListener('click', (e) => {
+      let data = e.currentTarget.dataset.placeData;
+      console.log(e.currentTarget);
+      setModalData(data);
+      
+    })
+  })
+}
+
+function setModalData(data){
+  let parsedData = JSON.parse(data) || "",
+      placeModal = document.querySelector("#place-modal") || "";
+      modalContent = document.querySelector("#place-modal .modal-content") || "";
+
+  $('#place-modal').modal('open');
+  modalContent.innerHTML = `
+    <div data-id="${parsedData.id}-full" class="toggle-modal">
+    <div class="row">
+
+      <div class="col s12 m12 l6">
+        <div class="card">
+
+          <div class="card-image">
+            <img loading=lazy class="card-img" src="${parsedData.image_thumbnail}" alt="">
+            <span class="card-title card-img-title">${parsedData.name}</span>
+          </div>
+
+          <div class="card-content">
+            <p class="long-description">${parsedData.long_description}</p>
+          </div>
+
+        </div>
+      </div>
+
+      
+
+      <div class="col s12 m12 l6">
+        <div class="card">
+          <h5 class="center-align" style="padding-top: 15px; margin: 0px;">Ratings</h5>
+          <div class="card-content">
+            <div class="container">
+                <div class="">
+                  <div class="hreview-aggregate">
+                    <div class="row">
+                      <div class="col s12 m12 l12">
+                        <meta itemprop="worstRating" content="1">
+                        <meta itemprop="bestRating" content="5">
+                        <meta itemprop="reviewCount" content="1">
+                        <div class="row">
+
+                          <div class="score col s12">
+                            5
+                          </div>
+                          <div class="rating-stars col s12">
+
+                            <input type="radio" name="stars" id="star-null">
+                            <input type="radio" name="stars" id="star-1" saving="1" data-start="1" checked="">
+                            <input type="radio" name="stars" id="star-2" saving="2" data-start="2" checked="">
+                            <input type="radio" name="stars" id="star-3" saving="3" data-start="3" checked="">
+                            <input type="radio" name="stars" id="star-4" saving="4" data-start="4" checked="">
+                            <input type="radio" name="stars" id="star-5" saving="5" checked="">
+                            <section>
+                              <label for="star-1">
+                                <svg width="255" height="240" viewBox="0 0 51 48">
+                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                                </svg>
+                              </label>
+                              <label for="star-2">
+                                <svg width="255" height="240" viewBox="0 0 51 48">
+                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                                </svg>
+                              </label>
+                              <label for="star-3">
+                                <svg width="255" height="240" viewBox="0 0 51 48">
+                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                                </svg>
+                              </label>
+                              <label for="star-4">
+                                <svg width="255" height="240" viewBox="0 0 51 48">
+                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                                </svg>
+                              </label>
+                              <label for="star-5">
+                                <svg width="255" height="240" viewBox="0 0 51 48">
+                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                                </svg>
+                              </label>
+                            </section>
+                          </div>
+
+                          <div class="reviews-stats col s12">
+                            <span class="reviewers-small"></span>
+                            <span class="reviews-num">1</span> total
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="rating-histogram col s12 m12 l12">
+                        <div class="container">
+                          <div class="rating-bar-container five">
+                            <span class="bar-label">
+                                <span class="star-tiny">
+                              </span> 5
+                            </span>
+                            <span class="bar">
+                            </span>
+                            <span class="bar-number">
+                            1
+                            </span>
+                          </div>
+                          <div class="rating-bar-container four">
+                            <span class="bar-label">
+                                <span class="star-tiny">
+                              </span> 4
+                            </span>
+                            <span class="bar">
+                            </span>
+                            <span class="bar-number">
+                            1
+                            </span>
+                          </div>
+                          <div class="rating-bar-container tree">
+                            <span class="bar-label">
+                                <span class="star-tiny">
+                              </span> 3
+                            </span>
+                            <span class="bar">
+                            </span>
+                            <span class="bar-number">
+                            1
+                            </span>
+                          </div>
+                          <div class="rating-bar-container two">
+                            <span class="bar-label">
+                                <span class="star-tiny">
+                              </span> 2
+                            </span>
+                            <span class="bar">
+                            </span>
+                            <span class="bar-number">
+                            1
+                            </span>
+                          </div>
+                          <div class="rating-bar-container one">
+                            <span class="bar-label">
+                                <span class="star-tiny">
+                              </span> 1
+                            </span>
+                            <span class="bar">
+                            </span>
+                            <span class="bar-number">
+                            1
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <ul class="collection">
+                  <li class="collection-item avatar">
+                    <img src="https://avatars2.githubusercontent.com/u/18651126?s=460&u=ea2834cff018a104af898c4b2a7ed376fce0e3da&v=4" alt="" class="circle">
+                    <span class="title">Title</span>
+                    <p>First Line <br>
+                      Second Line
+                    </p>
+                    <a href="#!" class="secondary-content">
+                      <i class="material-icons cyan-text">grade</i>
+                      <i class="material-icons cyan-text">grade</i>
+                      <i class="material-icons cyan-text">grade</i>
+                      <i class="material-icons cyan-text">grade</i>
+                      <i class="material-icons cyan-text">grade</i>
+                    </a>
+                  </li>
+                  <li class="collection-item avatar">
+                    <img src="https://avatars2.githubusercontent.com/u/18651126?s=460&u=ea2834cff018a104af898c4b2a7ed376fce0e3da&v=4g" alt="" class="circle">
+                    <span class="title">Title</span>
+                    <p>First Line <br>
+                      Second Line
+                    </p>
+                    <a href="#!" class="secondary-content">
+                      <i class="material-icons cyan-text">grade</i>
+                      <i class="material-icons cyan-text">grade</i>
+                      <i class="material-icons cyan-text">grade</i>
+                      <i class="material-icons cyan-text">grade</i>
+                      <i class="material-icons cyan-text">grade</i>
+                    </a>
+                  </li>
+                  <li class="collection-item avatar">
+                    <img src="https://avatars2.githubusercontent.com/u/18651126?s=460&u=ea2834cff018a104af898c4b2a7ed376fce0e3da&v=4" alt="" class="circle">
+                    <span class="title">Title</span>
+                    <p>First Line <br>
+                      Second Line
+                    </p>
+                    <a href="#!" class="secondary-content">
+                      <i class="material-icons cyan-text">grade</i>
+                      <i class="material-icons cyan-text">grade</i>
+                      <i class="material-icons cyan-text">grade</i>
+                      <i class="material-icons cyan-text">grade</i>
+                      <i class="material-icons cyan-text">grade</i>
+                    </a>
+                  </li>
+                  <li class="collection-item add-rating-li">
+                      <div class="row">
+
+                        <div class="rating-stars col s12">
+                          <input type="radio" name="stars" id="star-null">
+                          <input type="radio" name="stars" id="star-1" saving="1" data-start="1" checked="">
+                          <input type="radio" name="stars" id="star-2" saving="2" data-start="2" checked="">
+                          <input type="radio" name="stars" id="star-3" saving="3" data-start="3" checked="">
+                          <input type="radio" name="stars" id="star-4" saving="4" data-start="4" checked="">
+                          <input type="radio" name="stars" id="star-5" saving="5" checked="">
+                          <section>
+                            <label for="star-1">
+                              <svg width="255" height="240" viewBox="0 0 51 48">
+                                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                              </svg>
+                            </label>
+                            <label for="star-2">
+                              <svg width="255" height="240" viewBox="0 0 51 48">
+                                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                              </svg>
+                            </label>
+                            <label for="star-3">
+                              <svg width="255" height="240" viewBox="0 0 51 48">
+                                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                              </svg>
+                            </label>
+                            <label for="star-4">
+                              <svg width="255" height="240" viewBox="0 0 51 48">
+                                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                              </svg>
+                            </label>
+                            <label for="star-5">
+                              <svg width="255" height="240" viewBox="0 0 51 48">
+                                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                              </svg>
+                            </label>
+                          </section>
+                        </div>
+
+                        <div class="input-field col s12">
+                          <textarea id="ratingTextarea" class="materialize-textarea"></textarea>
+                          <label for="ratingTextarea">Comment</label>
+                        </div>
+
+                        <div class="col s12">
+                          <a class="waves-effect waves-light btn" style="width: 100%;display: flex;justify-content: center;"><i class="material-icons left">send</i>Submit Review</a>
+                        </div>
+                        
+
+                      </div>
+                  </li>
+                </ul>
+            </div>    
+          </div>
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    </div>`;
+
+    // Initialize
+}
 
 function loadMore(e){
   e.target.parentElement.style.display = 'none';
@@ -207,8 +486,8 @@ function renderPlaces(data){
   // generate card
   let newDiv = document.createElement('div');
 
-  // newDiv.dataset.target  = modalID;
-  newDiv.classList = [""];
+  newDiv.dataset.placeData = JSON.stringify(data);
+  newDiv.classList = ["tourist-places-card"];
   newDiv.innerHTML = `
     <div data-id="${data.id}" class="card hoverable toggle-modal" style="cursor: pointer;">
       <div class="card-image">
@@ -586,15 +865,15 @@ function distanceMatrix(){
   var start = $('#address1').val();
   var end = $('#address2').val();
 
-  // var origin1 = new google.maps.LatLng(latLngArray[0]);
-  // var origin2 = start;
-  // var destinationA = end;
-  // var destinationB = new google.maps.LatLng(latLngArray[1]);
-
-  var origin1 = start;
-  var origin2 = end;
-  var destinationA = new google.maps.LatLng(latLngArray[0]);
+  var origin1 = new google.maps.LatLng(latLngArray[0]);
+  var origin2 = start;
+  var destinationA = end;
   var destinationB = new google.maps.LatLng(latLngArray[1]);
+
+  // var origin1 = start;
+  // var origin2 = end;
+  // var destinationA = new google.maps.LatLng(latLngArray[0]);
+  // var destinationB = new google.maps.LatLng(latLngArray[1]);
 
   var service = new google.maps.DistanceMatrixService();
   service.getDistanceMatrix({
