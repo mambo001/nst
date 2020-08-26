@@ -88,10 +88,12 @@ function setPlacesEventListeners(){
   let places = document.querySelectorAll('.tourist-places-card');
   places.forEach((place) => {
     place.addEventListener('click', (e) => {
-      let data = e.currentTarget.dataset.placeData;
-      console.log(e.currentTarget);
+      let data = e.currentTarget.dataset.placeData,
+          selectedPlaceID = JSON.parse(e.currentTarget.dataset.placeData).id;
+
+      // console.log(JSON.parse(e.currentTarget.dataset.placeData).id);
       setModalData(data);
-      
+      getPlaceRatings(selectedPlaceID);
     })
   })
 }
@@ -102,8 +104,9 @@ function setModalData(data){
       modalContent = document.querySelector("#place-modal .modal-content") || "";
 
   $('#place-modal').modal('open');
+
   modalContent.innerHTML = `
-    <div data-id="${parsedData.id}-full" class="toggle-modal">
+    <div data-id="${parsedData.id}" class="toggle-modal">
     <div class="row">
 
       <div class="col s12 m12 l6">
@@ -142,14 +145,14 @@ function setModalData(data){
                           </div>
                           <div class="rating-stars col s12">
 
-                            <input type="radio" name="stars" id="star-null">
-                            <input type="radio" name="stars" id="star-1" saving="1" data-start="1" checked="">
-                            <input type="radio" name="stars" id="star-2" saving="2" data-start="2" checked="">
-                            <input type="radio" name="stars" id="star-3" saving="3" data-start="3" checked="">
-                            <input type="radio" name="stars" id="star-4" saving="4" data-start="4" checked="">
-                            <input type="radio" name="stars" id="star-5" saving="5" checked="">
+                            <input type="radio" name="stars" id="star-nullnull">
+                            <input type="radio" name="stars" id="star-11" saving="1" data-start="1" checked="">
+                            <input type="radio" name="stars" id="star-22" saving="2" data-start="2" checked="">
+                            <input type="radio" name="stars" id="star-33" saving="3" data-start="3" checked="">
+                            <input type="radio" name="stars" id="star-44" saving="4" data-start="4" checked="">
+                            <input type="radio" name="stars" id="star-55" saving="5" checked="">
                             <section>
-                              <label for="star-1">
+                              <label for="star-11">
                                 <svg width="255" height="240" viewBox="0 0 51 48">
                                     <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
                                 </svg>
@@ -159,17 +162,17 @@ function setModalData(data){
                                     <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
                                 </svg>
                               </label>
-                              <label for="star-3">
+                              <label for="star-33">
                                 <svg width="255" height="240" viewBox="0 0 51 48">
                                     <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
                                 </svg>
                               </label>
-                              <label for="star-4">
+                              <label for="star-44">
                                 <svg width="255" height="240" viewBox="0 0 51 48">
                                     <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
                                 </svg>
                               </label>
-                              <label for="star-5">
+                              <label for="star-55">
                                 <svg width="255" height="240" viewBox="0 0 51 48">
                                     <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
                                 </svg>
@@ -185,7 +188,7 @@ function setModalData(data){
                         </div>
                       </div>
 
-                      <div class="rating-histogram col s12 m12 l12">
+                      <div class="rating-histogram col s12 m12 l12 hide">
                         <div class="container">
                           <div class="rating-bar-container five">
                             <span class="bar-label">
@@ -252,10 +255,8 @@ function setModalData(data){
                 <ul class="collection">
                   <li class="collection-item avatar">
                     <img src="https://avatars2.githubusercontent.com/u/18651126?s=460&u=ea2834cff018a104af898c4b2a7ed376fce0e3da&v=4" alt="" class="circle">
-                    <span class="title">Title</span>
-                    <p>First Line <br>
-                      Second Line
-                    </p>
+                    <span class="title">Reuben Mark</span>
+                    <p>First Line Second Line</p>
                     <a href="#!" class="secondary-content">
                       <i class="material-icons cyan-text">grade</i>
                       <i class="material-icons cyan-text">grade</i>
@@ -266,12 +267,9 @@ function setModalData(data){
                   </li>
                   <li class="collection-item avatar">
                     <img src="https://avatars2.githubusercontent.com/u/18651126?s=460&u=ea2834cff018a104af898c4b2a7ed376fce0e3da&v=4g" alt="" class="circle">
-                    <span class="title">Title</span>
-                    <p>First Line <br>
-                      Second Line
-                    </p>
+                    <span class="title">Reuben</span>
+                    <p>First Line Second Line</p>
                     <a href="#!" class="secondary-content">
-                      <i class="material-icons cyan-text">grade</i>
                       <i class="material-icons cyan-text">grade</i>
                       <i class="material-icons cyan-text">grade</i>
                       <i class="material-icons cyan-text">grade</i>
@@ -280,15 +278,9 @@ function setModalData(data){
                   </li>
                   <li class="collection-item avatar">
                     <img src="https://avatars2.githubusercontent.com/u/18651126?s=460&u=ea2834cff018a104af898c4b2a7ed376fce0e3da&v=4" alt="" class="circle">
-                    <span class="title">Title</span>
-                    <p>First Line <br>
-                      Second Line
-                    </p>
+                    <span class="title">Mark</span>
+                    <p>First Line Second Line</p>
                     <a href="#!" class="secondary-content">
-                      <i class="material-icons cyan-text">grade</i>
-                      <i class="material-icons cyan-text">grade</i>
-                      <i class="material-icons cyan-text">grade</i>
-                      <i class="material-icons cyan-text">grade</i>
                       <i class="material-icons cyan-text">grade</i>
                     </a>
                   </li>
@@ -677,6 +669,20 @@ function geocodePosition(pos,box_no) {
         }
     }
   });
+}
+
+function getPlaceRatings(placeID){
+  //getMovieStars
+  console.log("f passed placeID: " + placeID)
+  const ratingsRef = db.collection('ratings').where("placeID", "==", placeID);
+
+  ratingsRef.get().then(snapshot => {
+    snapshot.docs.forEach(doc => {
+      const docData = doc.data();
+        // docData.id = doc.id;
+       console.table(docData);
+    })
+  })
 }
 
 function updateMarkerPosition(latLng) {
