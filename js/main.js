@@ -84,6 +84,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
   checkToggleables();  
 });
 
+// window.addEventListener('click', (e) => {
+//   console.log(e.currentTarget)
+// });
+
 function setPlacesEventListeners(){
   let places = document.querySelectorAll('.tourist-places-card');
   places.forEach((place) => {
@@ -182,7 +186,7 @@ function setModalData(data){
 
                           <div class="reviews-stats col s12">
                             <span class="reviewers-small"></span>
-                            <span class="reviews-num">1</span> total
+                            <span class="reviews-num">0</span> total
                           </div>
 
                         </div>
@@ -252,89 +256,9 @@ function setModalData(data){
                   </div>
                 </div>
 
-                <ul class="collection">
-                  <li class="collection-item avatar">
-                    <img src="https://avatars2.githubusercontent.com/u/18651126?s=460&u=ea2834cff018a104af898c4b2a7ed376fce0e3da&v=4" alt="" class="circle">
-                    <span class="title">Reuben Mark</span>
-                    <p>First Line Second Line</p>
-                    <a href="#!" class="secondary-content">
-                      <i class="material-icons cyan-text">grade</i>
-                      <i class="material-icons cyan-text">grade</i>
-                      <i class="material-icons cyan-text">grade</i>
-                      <i class="material-icons cyan-text">grade</i>
-                      <i class="material-icons cyan-text">grade</i>
-                    </a>
-                  </li>
-                  <li class="collection-item avatar">
-                    <img src="https://avatars2.githubusercontent.com/u/18651126?s=460&u=ea2834cff018a104af898c4b2a7ed376fce0e3da&v=4g" alt="" class="circle">
-                    <span class="title">Reuben</span>
-                    <p>First Line Second Line</p>
-                    <a href="#!" class="secondary-content">
-                      <i class="material-icons cyan-text">grade</i>
-                      <i class="material-icons cyan-text">grade</i>
-                      <i class="material-icons cyan-text">grade</i>
-                      <i class="material-icons cyan-text">grade</i>
-                    </a>
-                  </li>
-                  <li class="collection-item avatar">
-                    <img src="https://avatars2.githubusercontent.com/u/18651126?s=460&u=ea2834cff018a104af898c4b2a7ed376fce0e3da&v=4" alt="" class="circle">
-                    <span class="title">Mark</span>
-                    <p>First Line Second Line</p>
-                    <a href="#!" class="secondary-content">
-                      <i class="material-icons cyan-text">grade</i>
-                    </a>
-                  </li>
-                  <li class="collection-item add-rating-li">
-                      <div class="row">
+                <ul class="collection ratings-collection">
 
-                        <div class="rating-stars col s12">
-                          <input type="radio" name="stars" id="star-null">
-                          <input type="radio" name="stars" id="star-1" saving="1" data-start="1" checked="">
-                          <input type="radio" name="stars" id="star-2" saving="2" data-start="2" checked="">
-                          <input type="radio" name="stars" id="star-3" saving="3" data-start="3" checked="">
-                          <input type="radio" name="stars" id="star-4" saving="4" data-start="4" checked="">
-                          <input type="radio" name="stars" id="star-5" saving="5" checked="">
-                          <section>
-                            <label for="star-1">
-                              <svg width="255" height="240" viewBox="0 0 51 48">
-                                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
-                              </svg>
-                            </label>
-                            <label for="star-2">
-                              <svg width="255" height="240" viewBox="0 0 51 48">
-                                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
-                              </svg>
-                            </label>
-                            <label for="star-3">
-                              <svg width="255" height="240" viewBox="0 0 51 48">
-                                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
-                              </svg>
-                            </label>
-                            <label for="star-4">
-                              <svg width="255" height="240" viewBox="0 0 51 48">
-                                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
-                              </svg>
-                            </label>
-                            <label for="star-5">
-                              <svg width="255" height="240" viewBox="0 0 51 48">
-                                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
-                              </svg>
-                            </label>
-                          </section>
-                        </div>
 
-                        <div class="input-field col s12">
-                          <textarea id="ratingTextarea" class="materialize-textarea"></textarea>
-                          <label for="ratingTextarea">Comment</label>
-                        </div>
-
-                        <div class="col s12">
-                          <a class="waves-effect waves-light btn" style="width: 100%;display: flex;justify-content: center;"><i class="material-icons left">send</i>Submit Review</a>
-                        </div>
-                        
-
-                      </div>
-                  </li>
                 </ul>
             </div>    
           </div>
@@ -350,6 +274,165 @@ function setModalData(data){
 
     // Initialize
 }
+
+function getPlaceRatings(placeID){
+  //getMovieStars
+  console.log("f passed placeID: " + placeID)
+  const ratingsRef = db.collection('ratings').where("placeID", "==", placeID);
+
+  ratingsRef.get().then(snapshot => {
+    let ratings = snapshot.docs.map(doc => doc.data()),
+        ratingsCollection = document.querySelector('.ratings-collection'),
+        addRatingLI = document.querySelector('.add-rating-li'),
+        reviewsNumber = document.querySelector('.reviews-num');
+
+    console.log(snapshot.docs.map(doc => doc.data()));
+
+    let liRatings = ratings.map((r) => {
+      return `
+        <li class="collection-item avatar">
+          <img src="https://avatars2.githubusercontent.com/u/18651126?s=460&amp;u=ea2834cff018a104af898c4b2a7ed376fce0e3da&amp;v=4" alt="" class="circle">
+          <span class="title">${r.userID}</span>
+          <p>${r.comment}</p>
+          <a href="#!" class="secondary-content">
+            <i class="material-icons cyan-text">grade</i>
+            <i class="material-icons cyan-text">grade</i>
+            <i class="material-icons cyan-text">grade</i>
+            <i class="material-icons cyan-text">grade</i>
+            <i class="material-icons cyan-text">grade</i>
+          </a>
+        </li>
+      `}
+    );
+
+    reviewsNumber.textContent = ratings.length;
+
+    // console.log("liRatings: " + liRatings);
+    ratingsCollection.innerHTML = liRatings.join('');
+
+    let liAddRatings = document.createElement('li');
+    liAddRatings.classList.add('collection-item', 'add-rating-li');
+    liAddRatings.innerHTML = `
+      <div class="row">
+
+        <div class="rating-stars col s12">
+          <input type="radio" name="stars" id="star-null">
+          <input type="radio" name="stars" id="star-1" saving="1" data-start="1" checked="">
+          <input type="radio" name="stars" id="star-2" saving="2" data-start="2" checked="">
+          <input type="radio" name="stars" id="star-3" saving="3" data-start="3" checked="">
+          <input type="radio" name="stars" id="star-4" saving="4" data-start="4" checked="">
+          <input type="radio" name="stars" id="star-5" saving="5" checked="">
+          <section>
+            <label for="star-1">
+              <svg width="255" height="240" viewBox="0 0 51 48">
+                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+              </svg>
+            </label>
+            <label for="star-2">
+              <svg width="255" height="240" viewBox="0 0 51 48">
+                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+              </svg>
+            </label>
+            <label for="star-3">
+              <svg width="255" height="240" viewBox="0 0 51 48">
+                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+              </svg>
+            </label>
+            <label for="star-4">
+              <svg width="255" height="240" viewBox="0 0 51 48">
+                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+              </svg>
+            </label>
+            <label for="star-5">
+              <svg width="255" height="240" viewBox="0 0 51 48">
+                  <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+              </svg>
+            </label>
+          </section>
+        </div>
+
+        <div class="input-field col s12">
+          <div id="selectedPlaceID" data-id="${placeID}" style="display: none;"></div>
+          <textarea id="ratingTextarea" class="materialize-textarea"></textarea>
+          <label for="ratingTextarea">Comment</label>
+        </div>
+
+        <div class="col s12">
+          <a class="waves-effect waves-light btn cyan submit-review-btn" style="width: 100%;display: flex;justify-content: center;"><i class="material-icons left">send</i>Submit Review</a>
+        </div>
+        
+
+      </div>`;
+    
+    ratingsCollection.innerHTML = liRatings.join('');
+    ratingsCollection.appendChild(liAddRatings);
+    
+  })
+}
+
+document.querySelector('#place-modal').addEventListener('click', clickEventHandler);
+
+function clickEventHandler(e){
+  
+  // if(e.target.matches(".material-icons")){
+  //   // set to parent if icon
+  //   e.target = e.target.parentElement;
+    // console.log(e.target);
+    if (e.target.matches(".submit-review-btn")){
+      // console.log(e.target);
+      addNewRating(e.target);
+    }
+  // }
+
+}
+
+var createUUID = function() {
+  return"anon_"+((new Date).getTime().toString(16)+Math.floor(1E7*Math.random()).toString(16));
+}
+
+function addNewRating(e){
+  console.log("add new: " + e)
+  let ratingTextarea = document.querySelector('#ratingTextarea').value || "",
+      placeID = document.querySelector('#selectedPlaceID');
+  console.log(ratingTextarea)
+  // function writeUserData(userId, name, email, imageUrl) {
+  // }
+  // firebase.database().ref('ratings').set({
+  //   userID: "Anonymous",
+  //   comment: ratingTextarea,
+  //   value: 5
+  // });
+  // db.collection('ratings').set({
+    // userID: "Anonymous",
+    // comment: ratingTextarea,
+    // value: 5
+  // });
+  db.collection("ratings").doc(createUUID()).set({
+    placeID: placeID.dataset.id,
+    userID: "Anonymous",
+    comment: ratingTextarea,
+    value: 5
+})
+
+}
+
+function setRatingStars(starsCount){
+  // TODO: Return number of stars based on ratings value number
+  
+  let newArray = new Array(starsCount);
+
+  console.log("count: "+ starsCount)
+  console.log("newArray: "+ newArray)
+
+  return newArray.forEach(e => {
+    console.log('<i class="material-icons cyan-text">grade</i>');
+    `<i class="material-icons cyan-text">grade</i>`;
+  })
+
+  // return newArray.map((e) => `<i class="material-icons cyan-text">grade</i>`).join('');
+}
+
+
 
 function loadMore(e){
   e.target.parentElement.style.display = 'none';
@@ -669,20 +752,6 @@ function geocodePosition(pos,box_no) {
         }
     }
   });
-}
-
-function getPlaceRatings(placeID){
-  //getMovieStars
-  console.log("f passed placeID: " + placeID)
-  const ratingsRef = db.collection('ratings').where("placeID", "==", placeID);
-
-  ratingsRef.get().then(snapshot => {
-    snapshot.docs.forEach(doc => {
-      const docData = doc.data();
-        // docData.id = doc.id;
-       console.table(docData);
-    })
-  })
 }
 
 function updateMarkerPosition(latLng) {
