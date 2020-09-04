@@ -16,15 +16,27 @@ let placesRow = document.querySelector('#recommended-places'),
     password = document.querySelector('#password'),
     loginEmail = document.querySelector('#loginEmail'),
     loginPassword = document.querySelector('#loginPassword'),
+    logoutBtn = document.querySelectorAll('.logout-btn'),
     closeModalBtn= document.querySelectorAll('.close-modal-btn');
     
 
     closeModalBtn.forEach(btn => btn.addEventListener('click', () => $('#place-modal').modal('close')));
+    logoutBtn.forEach(btn => btn.addEventListener('click', doLogout));
     createAccountForm.addEventListener('submit', createNewAccount);
     loginAccountForm.addEventListener('submit', doLogin);
     loadMoreBtn.addEventListener('click', loadMore);
 
 window.addEventListener('DOMContentLoaded', (event) => {
+
+  firebase.auth().onAuthStateChanged(user => {
+    let loggedinUser = document.querySelector("#loggedinUser");
+    if (user){
+      loggedinUser.textContent = user.displayName;
+    } else {
+      console.log("not logged in!");
+    }
+  });
+
 
   // Set default main location 
   inputStartingPoint.value = "Biri Port, Coastal Road, Biri, Northern Samar, Philippines";
@@ -84,9 +96,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
   checkToggleables();  
 });
 
-// window.addEventListener('click', (e) => {
-//   console.log(e.currentTarget)
-// });
+function doLogout(){
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+
+    //Clear user details
+    loggedinUser.textContent = "Guest";
+
+    // Sign-out message
+    var toastHTML = '<span>Logged out successfully!</span';
+    M.toast({html: toastHTML});
+
+  }).catch(function(error) {
+    // An error happened.
+  });
+}
 
 function setPlacesEventListeners(){
   let places = document.querySelectorAll('.tourist-places-card');
@@ -285,14 +309,30 @@ function getPlaceRatings(placeID){
         ratingsCollection = document.querySelector('.ratings-collection'),
         addRatingLI = document.querySelector('.add-rating-li'),
         reviewsNumber = document.querySelector('.reviews-num');
-
     console.log(snapshot.docs.map(doc => doc.data()));
 
     let liRatings = ratings.map((r) => {
+      // 12345
+
+      var docRef = db.collection("users").doc(r.userID);
+      docRef.get().then((snap) => {
+        // let arr = snap.docs.map(doc => doc.data().name);
+        // console.log(snap.data().map(e => e.name))
+          // if (doc.exists) {
+          //     console.log("Document data:", doc.data().name);
+          //     return doc.data().name
+          // } else {
+          //     // doc.data() will be undefined in this case
+          //     console.log("No such document!");
+          // }
+      })
+
+      console.log(r.name);
+
       return `
         <li class="collection-item avatar">
           <img src="https://avatars2.githubusercontent.com/u/18651126?s=460&amp;u=ea2834cff018a104af898c4b2a7ed376fce0e3da&amp;v=4" alt="" class="circle">
-          <span class="title">${r.userID}</span>
+          <span class="title">${r.name}</span>
           <p>${r.comment}</p>
           <a href="#!" class="secondary-content">
             <i class="material-icons cyan-text">grade</i>
@@ -394,25 +434,31 @@ function addNewRating(e){
   console.log("add new: " + e)
   let ratingTextarea = document.querySelector('#ratingTextarea').value || "",
       placeID = document.querySelector('#selectedPlaceID');
-  console.log(ratingTextarea)
-  // function writeUserData(userId, name, email, imageUrl) {
-  // }
-  // firebase.database().ref('ratings').set({
-  //   userID: "Anonymous",
-  //   comment: ratingTextarea,
-  //   value: 5
-  // });
-  // db.collection('ratings').set({
-    // userID: "Anonymous",
-    // comment: ratingTextarea,
-    // value: 5
-  // });
-  db.collection("ratings").doc(createUUID()).set({
-    placeID: placeID.dataset.id,
-    userID: "Anonymous",
-    comment: ratingTextarea,
-    value: 5
-})
+  console.log(ratingTextarea);
+
+  // Add new rating based on user authentication status
+  firebase.auth().onAuthStateChanged(user => {
+    if (user){
+      db.collection("ratings").doc(`${user.uid}_${placeID.dataset.id}`).set({
+        placeID: placeID.dataset.id,
+        userID: user.uid,
+        comment: ratingTextarea,
+        value: 5
+      })
+    } else {
+      console.log("not logged in!");
+      db.collection("ratings").doc(createUUID()).set({
+        placeID: placeID.dataset.id,
+        userID: "Anonymous",
+        comment: ratingTextarea,
+        value: 5
+      })
+    }
+  });
+  // db.collection("users").doc(res.user.uid).set({
+  //   name: userInfo.fullName
+  // })
+
 
 }
 
@@ -462,11 +508,16 @@ function createNewAccount(e){
         displayName: userInfo.fullName
       }).then(function() {
         // Update successful.
+        db.collection("users").doc(res.user.uid).set({
+          userID: res.user.uid,
+          name: userInfo.fullName
+        })
         console.log("update success")
       }).catch(function(error) {
         // An error happened.
         console.log("name update failed")
       });
+
 
       var toastHTML = '<span>Account has been created successfully!</span><a class="btn-flat toast-action cyan-text modal-trigger" href="#loginForm">Login</a>';
       M.toast({html: toastHTML});
@@ -1057,7 +1108,6 @@ function calcRoute() {
   var end = $('#address2').val();
   var way_points_arr = [];
 
-  // 12345
   console.log("total waypoint" + $('.total_waypoint').val())
   for(i=1; i <= parseInt($('.total_waypoint').val()); i++){
       way_points_arr.push({
