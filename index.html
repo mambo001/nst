@@ -312,24 +312,38 @@
                     <input placeholder="Catarman" id="inputStartingPoint" type="text" class="" autocomplete="new-password">
                     <label class="active" for="inputStartingPoint">Starting Point</label>
       
-                    <input class="hide" type="text" id="address1" placeholder="Nearest address" readonly>
-                    <label class="active hide" for="address1"></label>
+                    <input class="hide" type="text" id="origin" placeholder="Nearest address" readonly>
+                    <label class="active " for="origin"></label>
                   </div>
         
                   <div class="input-field">
-                    <input placeholder="Bel-at Rock Formation" id="inputDestination" type="text" class="" autocomplete="new-password">
+                    <input placeholder="Bel-at Rock Formation" id="inputDestination" type="text" class="autocomplete" autocomplete="new-password">
                     <label class="active" for="inputDestination">Destination</label>
       
-                    <input id="address2" class="hide" type="text" placeholder="Nearest address" readonly>
-                    <label class="active hide" for="address2"></label>
+                    <input id="destination" class="hide" type="text" placeholder="Nearest address" readonly>
+                    <label class="active " for="destination"></label>
                   </div>
+
+                  <!-- <div class="input-field">
+                    <select class="icons" id="travel_mode">
+                      <option value="" disabled selected>Choose your option</option>
+                      <option value="" data-icon="images/sample-1.jpg">example 1</option>
+                      <option value="" data-icon="images/office.jpg">example 2</option>
+                      <option value="" data-icon="images/yuna.jpg">example 3</option>
+                    </select>
+                    <label>Images in select</label>
+                  </div> -->
+
+                  <label class="hide ">Travel Mode</label>
+                  <select class="hide browser-default" id="travel_mode">
+                    <option value="" disabled >Choose a travel mode</option>
+                    <option value="DRIVING" selected>DRIVING</option>
+                    <option value="WALKING">WALKING</option>
+                    <option value="BICYCLING">BICYCLING</option>
+                    <option value="TRANSIT" >TRANSIT</option>
+                  </select>
       
-      
-                  
-                  <input type="" name="latitude2" class="hide latitude form-control" value="" />
-                  <input type="" name="longitude2" class="hide longitude form-control" value="" />
-                  <input type="" name="marker_status" class="hide form-control" id="info"/>
-                  
+                        
                 </div>
                 <div class="card-action">
                   <button class="btn waves-effect waves-light cyan" id="buttonSearch" style="width: 100%; width: 100%;display: flex;justify-content: center;flex-direction: row-reverse;">Search
@@ -340,7 +354,7 @@
               <div class="card">
                 <div class="card-content">
                   <span class="card-title">Info</span>
-                  <div class="row" id="informationCard">
+                  <div class="row" id="informationCard" class="hide">
                   </div>
                 </div>
               </div>
@@ -348,7 +362,6 @@
           </div>
           
           <div class="col s12 m6" style="max-height: 95vh;" id="map-canvas"></div>
-          
           <div class="col s12 m3" style="min-height: 300px;">
             <span class="card-title">Info</span>
             <div class="row" id="suggestedCard">
@@ -508,5 +521,6 @@
     </script>
 
     <script src="./js/main.js"></script>
+    <script src="./js/map.js"></script>
 </body>
 </html>

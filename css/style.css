@@ -32,6 +32,10 @@ a > * {
   margin: 0;
 }
 
+i.material-icons.medium{
+  font-size: 2.5rem!important;
+}
+
 
 input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
   border-bottom: 1px solid #64B5F6 !important;
@@ -391,6 +395,15 @@ main {
 }
 
 #about-fees span{
+  font-weight: bold;
+}
+
+ul.showcase > li {
+  display: flex;
+  justify-content: space-between;
+}
+
+ul.showcase span{
   font-weight: bold;
 }
 
