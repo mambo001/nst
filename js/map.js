@@ -47,7 +47,7 @@ $(function () {
         });
 
         // Initialize nearby places recommendation
-        getRecommendedPlaces(map, biri);
+        // getRecommendedPlaces(map, biri);
         
     }
 
@@ -58,29 +58,54 @@ $(function () {
         console.log(biriCoordinates);
         service.nearbySearch({
           location: location,
-          radius: '20000',
+          radius: '10000',
           type: ['lodging', 'restaurant', 'cafe'],
-        //   keyword: 'lodging',
-        //   rankBy: google.maps.places.RankBy.PROMINENCE 
+          keyword: "(resort) OR (balay) OR (hotel) OR (restaurant) OR (lodging) OR (breakfast)" ,
+          rankBy: google.maps.places.RankBy.PROMINENCE
+        // rankBy: google.maps.places.RankBy.DISTANCE 
         }, (results) => {
-        
-          // id, name, photos, rating, types, user_ratings_total, vicinity
-          let filteredResult = results.filter(r => {
-            return {
-              id: r.id,
-              name: r.name,
-              photos: r.photos,
-              rating: r.rating,
-              types: r.types,
-              user_ratings_total: r.user_ratings_total,
-              vicinity: r.vicinity
+          console.log(results);
+          const suggestedCard = document.querySelector('#suggestedCard');
+          suggestedCard.innerHTML = "";
+          results.map(e => {
+
+            const newCol = document.createElement('div');
+            const photo = e.photos ? e.photos.map(photo => photo.getUrl({ maxWidth: 1000, maxHeight: 1000 })) : "";
+            let tagger = (num) => {
+                const starArray = [];
+                for (i=0;i<num;i++){
+                    starArray.push(`<i class="material-icons cyan-text">star</i>`);
+                }
+                return starArray.join("");
             };
+            newCol.classList.add("col", "s12");
+            newCol.innerHTML = `
+                <div class="card horizontal">
+                    <div class="card-image">
+                        <img style="min-height: 100%;" src="${photo}" alt="No image found for: ${e.name}">
+                        <span class="card-title card-img-title"">${e.name}</span>
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>Ratings: ${e.rating} by ${e.user_ratings_total} users</p>
+                            <span>${tagger(e.rating.toFixed())}</span>
+                        </div>
+                        <div class="card-action">
+                            <p>Tags: </p>
+                            ${e.types.map(type => `<div class="chip cyan white-text">${type}</div> `).join("")}
+                        </div>
+                  </div>
+                </div>
+            `;
+            suggestedCard.append(newCol);
+            
+            
+
+
+            
           });
-        //   console.log(results);
-          console.log(filteredResult);
-          // return filteredResult;
         }); 
-      }
+    }
 
 
     function setDestination() {
@@ -182,7 +207,7 @@ $(function () {
                 var duration_text = duration.text;
                 var duration_mins = `${Math.round((duration.value + 300) / 60)} mins`;
                 appendResults(distance_in_kilo, distance_in_mile, duration_text, duration_mins);
-                
+                getRecommendedPlaces(map, new google.maps.LatLng(12.6813955,124.359174));
 
                 // todo: send to firebase instead
                 // sendAjaxRequest(origin, destination, distance_in_kilo, distance_in_mile, duration_text);
