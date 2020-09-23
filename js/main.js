@@ -97,7 +97,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
     $('input#inputDestination.autocomplete').autocomplete({
-      data: autoCompleteData
+      data: autoCompleteData,
+      minLength: 0
     });
 
 
