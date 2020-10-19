@@ -47,7 +47,7 @@ $(function () {
         });
 
         // Initialize nearby places recommendation
-        // getRecommendedPlaces(map, biri);
+        getRecommendedPlaces(map, biri);
         
     }
 
@@ -283,29 +283,29 @@ $(function () {
 
     // send ajax request to save results in the database
     // todo: refactor to save into firebase
-    function sendAjaxRequest(origin, destination, distance_in_kilo, distance_in_mile, duration_text) {
-        var username =   $('#username').val();
-        var travel_mode =  $('#travel_mode').find(':selected').text();
-        $.ajax({
-            url: 'common.php',
-            type: 'POST',
-            data: {
-                username,
-                travel_mode,
-                origin,
-                destination,
-                distance_in_kilo,
-                distance_in_mile,
-                duration_text
-            },
-            success: function (response) {
-                console.info(response);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log(textStatus, errorThrown);
-            }
-        });
-    }
+    // function sendAjaxRequest(origin, destination, distance_in_kilo, distance_in_mile, duration_text) {
+    //     var username =   $('#username').val();
+    //     var travel_mode =  $('#travel_mode').find(':selected').text();
+    //     $.ajax({
+    //         url: 'common.php',
+    //         type: 'POST',
+    //         data: {
+    //             username,
+    //             travel_mode,
+    //             origin,
+    //             destination,
+    //             distance_in_kilo,
+    //             distance_in_mile,
+    //             duration_text
+    //         },
+    //         success: function (response) {
+    //             console.info(response);
+    //         },
+    //         error: function (jqXHR, textStatus, errorThrown) {
+    //             console.log(textStatus, errorThrown);
+    //         }
+    //     });
+    // }
 
     // on submit  display route ,append results and send calculateDistance to ajax request
     // $('#distance_form').submit(function (e) {
