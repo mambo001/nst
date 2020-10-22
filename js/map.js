@@ -47,7 +47,7 @@ $(function () {
         });
 
         // Initialize nearby places recommendation
-        getRecommendedPlaces(map, biri);
+        // getRecommendedPlaces(map, biri);
         
     }
 
