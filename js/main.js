@@ -17,7 +17,8 @@ let placesRow = document.querySelector('#recommended-places'),
     loginEmail = document.querySelector('#loginEmail'),
     loginPassword = document.querySelector('#loginPassword'),
     logoutBtn = document.querySelectorAll('.logout-btn'),
-    closeModalBtn= document.querySelectorAll('.close-modal-btn');
+    closeModalBtn= document.querySelectorAll('.close-modal-btn'),
+    savePDFBtn = document.querySelector('#savePDFBtn');
     
 
     closeModalBtn.forEach(btn => btn.addEventListener('click', () => $('#place-modal').modal('close')));
@@ -25,6 +26,8 @@ let placesRow = document.querySelector('#recommended-places'),
     createAccountForm.addEventListener('submit', createNewAccount);
     loginAccountForm.addEventListener('submit', doLogin);
     loadMoreBtn.addEventListener('click', loadMore);
+
+    savePDFBtn.addEventListener('click', (e) => window.print());
 
 window.addEventListener('DOMContentLoaded', (event) => {
 

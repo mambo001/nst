@@ -52,6 +52,7 @@ $(function () {
     }
 
     function getRecommendedPlaces(map, location){
+        console.log("get recommended places function invoked!")
         let service = new google.maps.places.PlacesService(map),
             biriCoordinates = {};
         
@@ -202,12 +203,14 @@ $(function () {
             } else {
                 var distance = response.rows[0].elements[0].distance;
                 var duration = response.rows[0].elements[0].duration;
-                var distance_in_kilo = distance.value / 1000; // the kilo meter
+                var distance_in_kilo = distance.value / 1000; // the kilometer
                 var distance_in_mile = distance.value / 1609.34; // the mile
                 var duration_text = duration.text;
                 var duration_mins = `${Math.round((duration.value + 300) / 60)} mins`;
+                var BIRI_COORDS = new google.maps.LatLng(12.6813955,124.359174);
                 appendResults(distance_in_kilo, distance_in_mile, duration_text, duration_mins);
-                getRecommendedPlaces(map, new google.maps.LatLng(12.6813955,124.359174));
+                console.log({BIRI_COORDS})
+                getRecommendedPlaces(map, BIRI_COORDS);
 
                 // todo: send to firebase instead
                 // sendAjaxRequest(origin, destination, distance_in_kilo, distance_in_mile, duration_text);

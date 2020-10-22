@@ -829,3 +829,17 @@ animation
     outline: rgb(51, 51, 51) none 0px;
 }
 /* rating starts css start*/
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #search, #search * {
+    visibility: visible;
+  }
+  #search {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}

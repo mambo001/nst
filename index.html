@@ -353,7 +353,11 @@
               </div>
               <div class="card">
                 <div class="card-content">
-                  <span class="card-title">Info</span>
+                  <div style="display: flex;justify-content: space-between;">
+                    <span class="card-title">Directions</span>
+                    <a id="savePDFBtn" class="btn cyan waves-effect waves-light">Save as PDF</a>
+                  </div>
+                    
                   <div class="row" id="informationCard" class="hide">
                   </div>
                 </div>
@@ -504,7 +508,11 @@
 
         document.addEventListener('DOMContentLoaded', function() {
           var gallery = new MaterialPhotoGallery(elem);
+
+
         });
+
+
 
         // Your web app's Firebase configuration
         var firebaseConfig = {
