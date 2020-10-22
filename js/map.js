@@ -56,14 +56,15 @@ $(function () {
         let service = new google.maps.places.PlacesService(map),
             biriCoordinates = {};
         
-        console.log(biriCoordinates);
+        console.log({biriCoordinates});
+        console.log({service});
         service.nearbySearch({
           location: location,
-          radius: '10000',
+        //   radius: '10000',
           type: ['lodging', 'restaurant', 'cafe'],
           keyword: "(resort) OR (balay) OR (hotel) OR (restaurant) OR (lodging) OR (breakfast)" ,
-          rankBy: google.maps.places.RankBy.PROMINENCE
-        // rankBy: google.maps.places.RankBy.DISTANCE 
+        //   rankBy: google.maps.places.RankBy.PROMINENCE
+        rankBy: google.maps.places.RankBy.DISTANCE 
         }, (results) => {
           console.log(results);
           const suggestedCard = document.querySelector('#suggestedCard');
