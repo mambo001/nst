@@ -31,6 +31,8 @@ let placesRow = document.querySelector('#recommended-places'),
 
 window.addEventListener('DOMContentLoaded', (event) => {
 
+
+
   firebase.auth().onAuthStateChanged(user => {
     let loggedinUser = document.querySelector("#loggedinUser");
     if (user){
@@ -177,126 +179,122 @@ function setModalData(data){
         <div class="card">
           <h5 class="center-align" style="padding-top: 15px; margin: 0px;">Ratings</h5>
           <div class="card-content">
-            <div class="container">
-                <div class="">
-                  <div class="hreview-aggregate">
+              <div class="hreview-aggregate">
+                <div class="row">
+                  <div class="col s12 m12 l12">
+                    <meta itemprop="worstRating" content="1">
+                    <meta itemprop="bestRating" content="5">
+                    <meta itemprop="reviewCount" content="1">
                     <div class="row">
-                      <div class="col s12 m12 l12">
-                        <meta itemprop="worstRating" content="1">
-                        <meta itemprop="bestRating" content="5">
-                        <meta itemprop="reviewCount" content="1">
-                        <div class="row">
 
-                          <div class="score col s12">
-                            5
-                          </div>
-                          <div class="rating-stars col s12">
+                      <div class="score col s12">
+                        5
+                      </div>
+                      <div class="rating-stars col s12">
 
-                            <input type="radio" name="stars" id="star-nullnull">
-                            <input type="radio" name="stars" id="star-11" saving="1" data-start="1" checked="">
-                            <input type="radio" name="stars" id="star-22" saving="2" data-start="2" checked="">
-                            <input type="radio" name="stars" id="star-33" saving="3" data-start="3" checked="">
-                            <input type="radio" name="stars" id="star-44" saving="4" data-start="4" checked="">
-                            <input type="radio" name="stars" id="star-55" saving="5" checked="">
-                            <section>
-                              <label for="star-11">
-                                <svg width="255" height="240" viewBox="0 0 51 48">
-                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
-                                </svg>
-                              </label>
-                              <label for="star-2">
-                                <svg width="255" height="240" viewBox="0 0 51 48">
-                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
-                                </svg>
-                              </label>
-                              <label for="star-33">
-                                <svg width="255" height="240" viewBox="0 0 51 48">
-                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
-                                </svg>
-                              </label>
-                              <label for="star-44">
-                                <svg width="255" height="240" viewBox="0 0 51 48">
-                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
-                                </svg>
-                              </label>
-                              <label for="star-55">
-                                <svg width="255" height="240" viewBox="0 0 51 48">
-                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
-                                </svg>
-                              </label>
-                            </section>
-                          </div>
-
-                          <div class="reviews-stats col s12">
-                            <span class="reviewers-small"></span>
-                            <span class="reviews-num">0</span> total
-                          </div>
-
-                        </div>
+                        <input type="radio" name="stars" id="star-nullnull">
+                        <input type="radio" name="stars" id="star-11" saving="1" data-start="1" checked="">
+                        <input type="radio" name="stars" id="star-22" saving="2" data-start="2" checked="">
+                        <input type="radio" name="stars" id="star-33" saving="3" data-start="3" checked="">
+                        <input type="radio" name="stars" id="star-44" saving="4" data-start="4" checked="">
+                        <input type="radio" name="stars" id="star-55" saving="5" checked="">
+                        <section>
+                          <label for="star-11">
+                            <svg width="255" height="240" viewBox="0 0 51 48">
+                                <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                            </svg>
+                          </label>
+                          <label for="star-2">
+                            <svg width="255" height="240" viewBox="0 0 51 48">
+                                <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                            </svg>
+                          </label>
+                          <label for="star-33">
+                            <svg width="255" height="240" viewBox="0 0 51 48">
+                                <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                            </svg>
+                          </label>
+                          <label for="star-44">
+                            <svg width="255" height="240" viewBox="0 0 51 48">
+                                <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                            </svg>
+                          </label>
+                          <label for="star-55">
+                            <svg width="255" height="240" viewBox="0 0 51 48">
+                                <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"></path>
+                            </svg>
+                          </label>
+                        </section>
                       </div>
 
-                      <div class="rating-histogram col s12 m12 l12 hide">
-                        <div class="container">
-                          <div class="rating-bar-container five">
-                            <span class="bar-label">
-                                <span class="star-tiny">
-                              </span> 5
-                            </span>
-                            <span class="bar">
-                            </span>
-                            <span class="bar-number">
-                            1
-                            </span>
-                          </div>
-                          <div class="rating-bar-container four">
-                            <span class="bar-label">
-                                <span class="star-tiny">
-                              </span> 4
-                            </span>
-                            <span class="bar">
-                            </span>
-                            <span class="bar-number">
-                            1
-                            </span>
-                          </div>
-                          <div class="rating-bar-container tree">
-                            <span class="bar-label">
-                                <span class="star-tiny">
-                              </span> 3
-                            </span>
-                            <span class="bar">
-                            </span>
-                            <span class="bar-number">
-                            1
-                            </span>
-                          </div>
-                          <div class="rating-bar-container two">
-                            <span class="bar-label">
-                                <span class="star-tiny">
-                              </span> 2
-                            </span>
-                            <span class="bar">
-                            </span>
-                            <span class="bar-number">
-                            1
-                            </span>
-                          </div>
-                          <div class="rating-bar-container one">
-                            <span class="bar-label">
-                                <span class="star-tiny">
-                              </span> 1
-                            </span>
-                            <span class="bar">
-                            </span>
-                            <span class="bar-number">
-                            1
-                            </span>
-                          </div>
-                        </div>
+                      <div class="reviews-stats col s12">
+                        <span class="reviewers-small"></span>
+                        <span class="reviews-num">0</span> total
                       </div>
 
                     </div>
                   </div>
+
+                  <div class="rating-histogram col s12 m12 l12 hide">
+                    <div class="container">
+                      <div class="rating-bar-container five">
+                        <span class="bar-label">
+                            <span class="star-tiny">
+                          </span> 5
+                        </span>
+                        <span class="bar">
+                        </span>
+                        <span class="bar-number">
+                        1
+                        </span>
+                      </div>
+                      <div class="rating-bar-container four">
+                        <span class="bar-label">
+                            <span class="star-tiny">
+                          </span> 4
+                        </span>
+                        <span class="bar">
+                        </span>
+                        <span class="bar-number">
+                        1
+                        </span>
+                      </div>
+                      <div class="rating-bar-container tree">
+                        <span class="bar-label">
+                            <span class="star-tiny">
+                          </span> 3
+                        </span>
+                        <span class="bar">
+                        </span>
+                        <span class="bar-number">
+                        1
+                        </span>
+                      </div>
+                      <div class="rating-bar-container two">
+                        <span class="bar-label">
+                            <span class="star-tiny">
+                          </span> 2
+                        </span>
+                        <span class="bar">
+                        </span>
+                        <span class="bar-number">
+                        1
+                        </span>
+                      </div>
+                      <div class="rating-bar-container one">
+                        <span class="bar-label">
+                            <span class="star-tiny">
+                          </span> 1
+                        </span>
+                        <span class="bar">
+                        </span>
+                        <span class="bar-number">
+                        1
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
 
                 <ul class="collection ratings-collection">
@@ -319,56 +317,31 @@ function setModalData(data){
 }
 
 function getPlaceRatings(placeID){
-  //getMovieStars
   console.log("f passed placeID: " + placeID)
-  const ratingsRef = db.collection('ratings').where("placeID", "==", placeID);
+  const ratingsRef = db.collection('ratings').where("placeID", "==", placeID),
+        ratingsCollection = document.querySelector('.ratings-collection');
 
-  ratingsRef.get().then(snapshot => {
-    let ratings = snapshot.docs.map(doc => doc.data()),
-        ratingsCollection = document.querySelector('.ratings-collection'),
-        addRatingLI = document.querySelector('.add-rating-li'),
-        reviewsNumber = document.querySelector('.reviews-num');
-    console.log(snapshot.docs.map(doc => doc.data()));
-
-    let liRatings = ratings.map((r) => {
-      // 12345
-
-      var docRef = db.collection("users").doc(r.userID);
-      docRef.get().then((snap) => {
-        // let arr = snap.docs.map(doc => doc.data().name);
-        // console.log(snap.data().map(e => e.name))
-          // if (doc.exists) {
-          //     console.log("Document data:", doc.data().name);
-          //     return doc.data().name
-          // } else {
-          //     // doc.data() will be undefined in this case
-          //     console.log("No such document!");
-          // }
-      })
-
-      console.log(r.name);
-
+  ratingsRef.onSnapshot(querySnapshot => {
+    const ratings = querySnapshot.docs.map(doc => {
+      console.log(doc.data())
+      const ratings = doc.data();
       return `
-        <li class="collection-item avatar">
-          <img src="https://avatars2.githubusercontent.com/u/18651126?s=460&amp;u=ea2834cff018a104af898c4b2a7ed376fce0e3da&amp;v=4" alt="" class="circle">
-          <span class="title">${r.name}</span>
-          <p>${r.comment}</p>
-          <a href="#!" class="secondary-content">
-            <i class="material-icons cyan-text">grade</i>
-            <i class="material-icons cyan-text">grade</i>
-            <i class="material-icons cyan-text">grade</i>
-            <i class="material-icons cyan-text">grade</i>
-            <i class="material-icons cyan-text">grade</i>
-          </a>
-        </li>
-      `}
-    );
+      <li class="collection-item avatar">
+        <img src="https://avatars2.githubusercontent.com/u/18651126?s=460&amp;u=ea2834cff018a104af898c4b2a7ed376fce0e3da&amp;v=4" alt="" class="circle">
+        <span class="title">${ratings.userID}</span>
+        <p>${ratings.comment}</p>
+        <a href="#!" class="secondary-content">
+          <i class="material-icons cyan-text">grade</i>
+          <i class="material-icons cyan-text">grade</i>
+          <i class="material-icons cyan-text">grade</i>
+          <i class="material-icons cyan-text">grade</i>
+          <i class="material-icons cyan-text">grade</i>
+        </a>
+      </li>`;
+    });
+    
 
-    reviewsNumber.textContent = ratings.length;
-
-    // console.log("liRatings: " + liRatings);
-    ratingsCollection.innerHTML = liRatings.join('');
-
+    ratingsCollection.innerHTML = ratings.join('');
     let liAddRatings = document.createElement('li');
     liAddRatings.classList.add('collection-item', 'add-rating-li');
     liAddRatings.innerHTML = `
@@ -422,11 +395,56 @@ function getPlaceRatings(placeID){
         
 
       </div>`;
-    
-    ratingsCollection.innerHTML = liRatings.join('');
-    ratingsCollection.appendChild(liAddRatings);
-    
-  })
+      ratingsCollection.appendChild(liAddRatings);
+  });
+
+  // ratingsRef.get().then(snapshot => {
+  //   let ratings = snapshot.docs.map(doc => doc.data()),
+  //       ratingsCollection = document.querySelector('.ratings-collection'),
+  //       addRatingLI = document.querySelector('.add-rating-li'),
+  //       reviewsNumber = document.querySelector('.reviews-num');
+  //   console.log(snapshot.docs.map(doc => doc.data()));
+
+  //   let liRatings = ratings.map((r) => {
+  //     // 12345
+
+  //     var docRef = db.collection("users").doc(r.userID);
+  //     docRef.get().then((snap) => {
+  //       // let arr = snap.docs.map(doc => doc.data().name);
+  //       // console.log(snap.data().map(e => e.name))
+  //         // if (doc.exists) {
+  //         //     console.log("Document data:", doc.data().name);
+  //         //     return doc.data().name
+  //         // } else {
+  //         //     // doc.data() will be undefined in this case
+  //         //     console.log("No such document!");
+  //         // }
+  //     })
+
+  //     console.log(r.name);
+  //     console.log({r})
+
+      // return `
+      //   <li class="collection-item avatar">
+      //     <img src="https://avatars2.githubusercontent.com/u/18651126?s=460&amp;u=ea2834cff018a104af898c4b2a7ed376fce0e3da&amp;v=4" alt="" class="circle">
+      //     <span class="title">${r.userID}</span>
+      //     <p>${r.comment}</p>
+      //     <a href="#!" class="secondary-content">
+      //       <i class="material-icons cyan-text">grade</i>
+      //       <i class="material-icons cyan-text">grade</i>
+      //       <i class="material-icons cyan-text">grade</i>
+      //       <i class="material-icons cyan-text">grade</i>
+      //       <i class="material-icons cyan-text">grade</i>
+      //     </a>
+      //   </li>
+  //     `}
+  //   );
+
+  //   reviewsNumber.textContent = ratings.length;
+
+  //   // console.log("liRatings: " + liRatings);
+  //   ratingsCollection.innerHTML = liRatings.join('');    
+  // })
 }
 
 document.querySelector('#place-modal').addEventListener('click', clickEventHandler);
@@ -452,7 +470,7 @@ var createUUID = function() {
 function addNewRating(e){
   console.log("add new: " + e)
   let ratingTextarea = document.querySelector('#ratingTextarea').value || "",
-      placeID = document.querySelector('#selectedPlaceID');
+      placeID = document.querySelector('#selectedPlaceID'); 
   console.log(ratingTextarea);
 
   // Add new rating based on user authentication status
@@ -463,7 +481,7 @@ function addNewRating(e){
         userID: user.uid,
         comment: ratingTextarea,
         value: 5
-      })
+      });
     } else {
       console.log("not logged in!");
       db.collection("ratings").doc(createUUID()).set({
@@ -471,12 +489,23 @@ function addNewRating(e){
         userID: "Anonymous",
         comment: ratingTextarea,
         value: 5
-      })
+      });
     }
   });
   // db.collection("users").doc(res.user.uid).set({
   //   name: userInfo.fullName
   // })
+
+
+  // clear form values
+  document.querySelector('#ratingTextarea').value = "";
+  Swal.fire(
+    'Success!',
+    'Your review has been successfully submitted!',
+    'success'
+  )
+  //todo
+  
 
 
 }
